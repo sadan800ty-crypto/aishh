@@ -201,76 +201,101 @@ z-index:998;
 </div>
 
 </div>
-
 <script>
+window.onload = function(){
+
 let current=0;
 const cards=document.querySelectorAll(".card");
 const music=document.getElementById("music");
 
+/* ---------- page switching ---------- */
 function show(i){
 cards[current].classList.remove("active");
 current=i;
 cards[current].classList.add("active");
 }
 
-function next(){ if(current<cards.length-1) show(current+1); }
+window.next=function(){
+if(current<cards.length-1) show(current+1);
+}
 
-function accept(){
+/* ---------- proposal ---------- */
+window.accept=function(){
 document.getElementById("blackout").style.opacity=1;
 setTimeout(()=>show(cards.length-1),2500);
 }
 
-function moveNo(){
+/* ---------- moving NO button ---------- */
+window.moveNo=function(){
 const btn=document.getElementById("noBtn");
 btn.style.top=Math.random()*80+"%";
 btn.style.left=Math.random()*80+"%";
 }
 
+/* ---------- music ---------- */
 document.addEventListener("click",()=>{
 if(music.paused) music.play().catch(()=>{});
 },{once:true});
 
-/* typing effect */
+/* ---------- SAFE typing effect ---------- */
 function typeText(id,text,speed=40){
-let i=0;
 const el=document.getElementById(id);
+if(!el) return;
+
+let i=0;
 function t(){
-if(i<text.length){ el.innerHTML+=text.charAt(i); i++; setTimeout(t,speed);}
+if(i<text.length){
+el.innerHTML+=text.charAt(i);
+i++;
+setTimeout(t,speed);
+}
 }
 t();
 }
+
 typeText("type1","Out of 8 billion people…");
 typeText("type2","I didn’t know it that night…");
 
-/* memory popup */
-function nextMemory(){
-document.getElementById("memory").style.opacity=1;
-document.getElementById("memory").style.pointerEvents="auto";
+/* ---------- memory popup ---------- */
+window.nextMemory=function(){
+const mem=document.getElementById("memory");
+mem.style.opacity=1;
+mem.style.pointerEvents="auto";
 }
-function closeMemory(){
-document.getElementById("memory").style.opacity=0;
-document.getElementById("memory").style.pointerEvents="none";
+
+window.closeMemory=function(){
+const mem=document.getElementById("memory");
+mem.style.opacity=0;
+mem.style.pointerEvents="none";
 next();
 }
 
-/* sunrise ending */
-function sunrise(){
+/* ---------- sunrise ---------- */
+window.sunrise=function(){
 document.getElementById("sunrise").style.opacity=1;
 }
 
-/* counter */
+/* ---------- counter ---------- */
 function update(){
+const counter=document.getElementById("counter");
+if(!counter) return;
+
 const start=new Date("2025-01-01T22:00:00");
 const now=new Date();
 const diff=now-start;
+
 const d=Math.floor(diff/86400000);
 const h=Math.floor(diff/3600000)%24;
 const m=Math.floor(diff/60000)%60;
-document.getElementById("counter").innerHTML=d+" days "+h+" hours "+m+" minutes";
+
+counter.innerHTML=d+" days "+h+" hours "+m+" minutes";
 }
 setInterval(update,1000);
 update();
+
+};
 </script>
 
 </body>
 </html>
+
