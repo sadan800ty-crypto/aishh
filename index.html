@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -14,7 +13,11 @@ height:100vh;
 overflow:hidden;
 background:linear-gradient(135deg,#ff4da6,#ff99cc,#ff66b2);
 background-size:400% 400%;
-animation:bgMove 12s infinite alternate;
+animation:bgMove 10s infinite alternate;
+display:flex;
+justify-content:center;
+align-items:center;
+perspective:1200px;
 color:white;
 }
 
@@ -23,55 +26,54 @@ color:white;
 100%{background-position:right;}
 }
 
-/* PAGE SYSTEM */
-.wrapper{
-display:flex;
-width:900%;
-height:100vh;
-transition:transform 1s cubic-bezier(.77,0,.18,1);
+/* 3D card container */
+.container{
+position:relative;
+width:90%;
+max-width:600px;
+height:420px;
+transform-style:preserve-3d;
+transition:1s;
 }
 
-.page{
-width:100vw;
-height:100vh;
-flex-shrink:0;
+.card{
+position:absolute;
+width:100%;
+height:100%;
+padding:40px;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+border-radius:25px;
+box-shadow:0 20px 50px rgba(255,0,150,.4);
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:40px;
+backface-visibility:hidden;
+transform:rotateY(180deg);
+transition:1s;
 }
 
-/* GLASS CARD */
-.card{
-max-width:650px;
-padding:45px;
-border-radius:25px;
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(20px);
-box-shadow:0 20px 60px rgba(255,0,150,.45);
-animation:pop 0.9s ease;
-}
-
-@keyframes pop{
-0%{transform:scale(.6) translateY(40px);opacity:0}
-100%{transform:scale(1) translateY(0);opacity:1}
+.card.active{
+transform:rotateY(0deg);
 }
 
 h1{
-font-size:2.6rem;
-text-shadow:0 0 25px rgba(255,0,150,.7);
+font-size:2.4rem;
+margin-bottom:15px;
+text-shadow:0 0 20px rgba(255,0,150,.6);
 }
 
 p{
-margin-top:15px;
-font-size:1.2rem;
+margin-top:10px;
+font-size:1.1rem;
 color:#fff0f7;
 }
 
 button{
 margin-top:25px;
-padding:13px 34px;
+padding:12px 30px;
 border:none;
 border-radius:30px;
 background:white;
@@ -82,24 +84,25 @@ transition:.3s;
 }
 
 button:hover{
-transform:scale(1.12);
+transform:scale(1.1);
 box-shadow:0 0 20px white;
 }
 
+/* counter */
 .counter{
 margin-top:15px;
-font-size:1.3rem;
+font-size:1.2rem;
 font-weight:600;
+color:#fff;
 }
 
-/* NO BUTTON */
-.no{
+/* yes/no buttons */
+#noBtn{
 position:absolute;
 background:#ff66b2;
 color:white;
 }
 </style>
-
 </head>
 
 <body>
@@ -108,104 +111,104 @@ color:white;
 <source src="dooron.mp3">
 </audio>
 
-<div class="wrapper" id="wrap">
+<div class="container">
 
-<!-- 1 -->
-
-<div class="page"><div class="card">
+<!-- 1. Cinematic Opening -->
+<div class="card active">
 <h1>Out of 8 billion people…</h1>
 <p>somehow my days started revolving around one.</p>
 <button onclick="next()">Continue</button>
-</div></div>
+</div>
 
-<!-- 2 -->
-
-<div class="page"><div class="card">
+<div class="card">
 <h1>Hi Aishh ❤️</h1>
 <p>I didn’t know it that night…</p>
 <button onclick="next()">Next</button>
-</div></div>
+</div>
 
-<!-- 3 COUNTER -->
-
-<div class="page"><div class="card">
+<!-- 2. Live Counter -->
+<div class="card">
 <h1>Since 1 January 2025 — 10:00 PM</h1>
 <div class="counter" id="counter"></div>
 <p>And not a single day I didn’t wait for your message.</p>
 <button onclick="next()">Next</button>
-</div></div>
+</div>
 
-<!-- LETTERS -->
-
-<div class="page"><div class="card">
+<!-- 4. Letter pages -->
+<div class="card">
 <h1>Page 1</h1>
 <p>The night we met felt normal.<br>But somehow… it wasn’t.</p>
 <button onclick="next()">Next</button>
-</div></div>
+</div>
 
-<div class="page"><div class="card">
+<div class="card">
 <h1>Page 2</h1>
 <p>You didn’t become my favorite person suddenly…<br>You became my habit first.</p>
 <button onclick="next()">Next</button>
-</div></div>
+</div>
 
-<div class="page"><div class="card">
+<div class="card">
 <h1>Page 3</h1>
 <p>You changed things in me quietly.<br>I smile more now.</p>
 <button onclick="next()">Next</button>
-</div></div>
+</div>
 
-<div class="page"><div class="card">
+<div class="card">
 <h1>Page 4</h1>
 <p>I don’t know what the future holds…<br>but I know I want you in it.</p>
 <button onclick="next()">Next</button>
-</div></div>
+</div>
 
-<!-- PROPOSAL -->
-
-<div class="page"><div class="card">
+<!-- 8. Proposal -->
+<div class="card">
 <h1>Stay with me forever?</h1>
-<button onclick="yes()">Yes ❤️</button>
-<button class="no" id="no">No</button>
-</div></div>
+<button onclick="accept()">Yes ❤️</button>
+<button id="noBtn" onmouseover="moveNo()">No</button>
+</div>
 
-<!-- FINAL -->
-
-<div class="page"><div class="card">
+<!-- 9. Final -->
+<div class="card">
 <h1>Happy Birthday ❤️</h1>
 <p>No matter where life takes us…<br>
 I’m just really glad it took me to you.</p>
-</div></div>
+</div>
 
 </div>
 
 <script>
-let page=0;
-const wrap=document.getElementById("wrap");
+let current=0;
+const cards=document.querySelectorAll(".card");
 const music=document.getElementById("music");
 
-/* navigation */
+function show(index){
+cards[current].classList.remove("active");
+current=index;
+cards[current].classList.add("active");
+}
+
 function next(){
-page++;
-wrap.style.transform=`translateX(-${page*100}vw)`;
+if(current < cards.length-1){
+show(current+1);
+}
 }
 
-function yes(){
-page=8;
-wrap.style.transform=`translateX(-${page*100}vw)`;
+function accept(){
+show(cards.length-1);
 }
-
-/* start music after first interaction */
-document.body.addEventListener("click",()=>{
-music.play().catch(()=>{});
-},{once:true});
 
 /* moving NO button */
-const no=document.getElementById("no");
-no.addEventListener("mouseover",()=>{
-no.style.top=Math.random()*70+"%";
-no.style.left=Math.random()*70+"%";
-});
+function moveNo(){
+const btn=document.getElementById("noBtn");
+btn.style.top=Math.random()*80+"%";
+btn.style.left=Math.random()*80+"%";
+}
+
+/* start music on first click */
+document.addEventListener("click",()=>{
+if(music.paused){
+music.play().catch(()=>{});
+}
+},{once:true});
 
 /* live counter */
 function update(){
@@ -213,12 +216,12 @@ const start=new Date("2025-01-01T22:00:00");
 const now=new Date();
 const diff=now-start;
 
-const d=Math.floor(diff/(1000*60*60*24));
-const h=Math.floor((diff/(1000*60*60))%24);
-const m=Math.floor((diff/(1000*60))%60);
+const days=Math.floor(diff/(1000*60*60*24));
+const hours=Math.floor((diff/(1000*60*60))%24);
+const minutes=Math.floor((diff/(1000*60))%60);
 
 document.getElementById("counter").innerHTML=
-d+" days "+h+" hrs "+m+" mins";
+days+" days "+hours+" hours "+minutes+" minutes";
 }
 setInterval(update,1000);
 update();
