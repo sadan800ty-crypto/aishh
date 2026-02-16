@@ -1,164 +1,140 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Aishh ❤️</title>
+<title>For Aishh ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#ffc0cb,#ff69b4);
-overflow:hidden;
-color:white;
-text-align:center;
+background:radial-gradient(circle at center,#ff8fc4,#ff2e8a);
+height:100vh;overflow:hidden;color:white;
+cursor:none;
 }
 
-/* pages */
-.page{
+/* cursor glow */
+.cursor{
+width:20px;height:20px;border-radius:50%;
+position:fixed;pointer-events:none;
+background:white;box-shadow:0 0 20px white,0 0 40px #ff9ac9;
+transform:translate(-50%,-50%);
+}
+
+/* floating hearts particles */
+.bg span{
+position:absolute;color:white;opacity:.5;
+animation:rise linear infinite;
+}
+@keyframes rise{
+from{transform:translateY(100vh) scale(.5);}
+to{transform:translateY(-10vh) scale(1.2);}
+}
+
+/* 3D stage */
+.stage{
+perspective:1500px;
+width:100%;height:100vh;
+position:relative;
+}
+
+.card{
 position:absolute;
-width:100%;
-height:100vh;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-animation:fade .7s ease;
-}
-.active{display:flex;}
-
-@keyframes fade{
-from{opacity:0; transform:scale(.9);}
-to{opacity:1; transform:scale(1);}
-}
-
-/* password screen */
-#lock{
-position:fixed;
-width:100%;
-height:100vh;
-background:#ff69b4;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:100;
-}
-
-input{
-padding:12px;
-border:none;
+width:100%;height:100%;
+display:flex;justify-content:center;align-items:center;
+flex-direction:column;text-align:center;
+backdrop-filter:blur(20px);
+background:rgba(255,255,255,.08);
 border-radius:20px;
-text-align:center;
-outline:none;
+transform-style:preserve-3d;
+transform:rotateY(90deg);
+transition:1s cubic-bezier(.77,0,.18,1);
 }
+.card.active{transform:rotateY(0);}
+
+h1{font-size:3rem;text-shadow:0 0 25px rgba(255,255,255,.8);}
+p{margin-top:15px;font-size:1.2rem;}
 
 button{
-margin-top:20px;
-padding:12px 26px;
-border:none;
-border-radius:30px;
-background:white;
-color:#ff1493;
-font-weight:bold;
-cursor:pointer;
+margin-top:35px;padding:12px 28px;border:none;border-radius:30px;
+background:white;color:#ff1493;font-weight:600;cursor:pointer;
 transition:.3s;
 }
-button:hover{transform:scale(1.1);}
+button:hover{transform:scale(1.15);box-shadow:0 0 20px white;}
+
+/* lock screen */
+#lock{
+position:fixed;width:100%;height:100vh;background:#ff2e8a;
+display:flex;flex-direction:column;justify-content:center;align-items:center;
+z-index:10;
+}
+input{padding:12px;border:none;border-radius:20px;margin-top:15px;text-align:center;}
+
+/* typing */
+.typing{border-right:3px solid white;white-space:nowrap;overflow:hidden;width:0;animation:typing 3s steps(30,end) forwards;}
+@keyframes typing{to{width:100%;}}
 
 /* envelope */
 .envelope{
-width:220px;
-height:150px;
-background:white;
-border-radius:12px;
-cursor:pointer;
-position:relative;
-overflow:hidden;
+width:260px;height:160px;background:white;border-radius:12px;
+cursor:pointer;position:relative;overflow:hidden;
 }
 .letter{
-position:absolute;
-width:100%;
-background:white;
-color:#ff1493;
-padding:15px;
-top:100%;
-transition:.7s;
+position:absolute;top:100%;width:100%;padding:20px;color:#ff1493;background:white;transition:1s;
 }
-.envelope.open .letter{top:-130px;}
+.envelope.open .letter{top:-150px;}
 
 /* gallery */
 .gallery img{
-width:160px;
-margin:10px;
-border-radius:15px;
-box-shadow:0 0 15px rgba(255,255,255,.7);
+width:180px;border-radius:15px;margin:10px;transition:.4s;
+box-shadow:0 0 20px rgba(255,255,255,.6);
 }
-
-/* floating hearts */
-.heart{
-position:fixed;
-font-size:22px;
-animation:fly 2s linear forwards;
-}
-@keyframes fly{
-from{transform:translateY(0);}
-to{transform:translateY(-600px); opacity:0;}
-}
+.gallery img:hover{transform:scale(1.15) rotate(2deg);}
 </style>
 
 </head>
 
 <body>
 
-<!-- PASSWORD -->
+<div class="cursor" id="cursor"></div>
+<div class="bg" id="bg"></div>
 
 <div id="lock">
 <h1>Enter Password 💖</h1>
-<input type="password" id="pass" placeholder="hint: her nickname">
-<button onclick="unlock()">Open</button>
+<input type="password" id="pass">
+<button onclick="unlock()">Enter</button>
 </div>
-
-<!-- MUSIC -->
 
 <audio id="music" loop>
 <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3">
 </audio>
 
-<!-- PAGE 1 -->
+<div class="stage">
 
-<div class="page" id="p0">
-<h1>Happy Birthday Aishh 🎂</h1>
-<h2>18 February — My Favourite Day 💕</h2>
+<div class="card" id="c0">
+<h1 class="typing">Happy Birthday Aishh 🎂</h1>
+<p>18 February — my universe started shining</p>
+<button onclick="next()">Begin</button>
+</div>
+
+<div class="card" id="c1">
+<h1>You Are My Magic ✨</h1>
+<p>Every second feels special with you</p>
 <button onclick="next()">Next</button>
 </div>
 
-<!-- PAGE 2 -->
-
-<div class="page" id="p1">
-<h1>You make my world magical ✨</h1>
-<p>Every moment with you feels special</p>
-<button onclick="next()">Next</button>
-</div>
-
-<!-- PAGE 3 LETTER -->
-
-<div class="page" id="p2">
-<h1>Open My Letter 💌</h1>
+<div class="card" id="c2">
+<h1>My Heart 💌</h1>
 <div class="envelope" onclick="this.classList.toggle('open')">
 <div class="letter">
-Dear Aishh ❤️<br><br>
-(Write your feelings here — edit this text anytime in GitHub)<br><br>
-You mean everything to me.
+Write your personal message here ❤️
 </div>
 </div>
 <button onclick="next()">Next</button>
 </div>
 
-<!-- PAGE 4 PHOTOS -->
-
-<div class="page" id="p3">
+<div class="card" id="c3">
 <h1>Our Memories 📸</h1>
 <div class="gallery">
 <img src="https://picsum.photos/300?1">
@@ -168,50 +144,48 @@ You mean everything to me.
 <button onclick="next()">Next</button>
 </div>
 
-<!-- FINAL PAGE -->
+<div class="card" id="c4">
+<h1>Will You Stay With Me Forever? 💍</h1>
+<p>I Love You Aishh ❤️</p>
+</div>
 
-<div class="page" id="p4">
-<h1>Will You Be Mine Forever? 💍</h1>
-<h2>I Love You Aishh ❤️</h2>
 </div>
 
 <script>
-let current=0;
-let unlocked=false;
-const pages=document.querySelectorAll(".page");
-
-function show(i){
-pages.forEach(p=>p.classList.remove("active"));
-pages[i].classList.add("active");
-}
+let i=0, unlocked=false;
+const cards=document.querySelectorAll('.card');
+cards[0].classList.add('active');
 
 function unlock(){
-if(document.getElementById("pass").value.toLowerCase()==="aishh"){
-document.getElementById("lock").style.display="none";
+if(pass.value.toLowerCase()==='aishh'){
+lock.style.display='none';
+music.play().catch(()=>{});
 unlocked=true;
-show(0);
-document.getElementById("music").play().catch(()=>{});
-}else alert("Wrong password 😝");
+}else alert("Wrong password");
 }
 
 function next(){
-if(!unlocked) return;
-if(current<pages.length-1){
-current++;
-show(current);
-burst();
+if(!unlocked)return;
+if(i<cards.length-1){
+cards[i].classList.remove('active');
+i++;
+cards[i].classList.add('active');
 }
 }
 
-function burst(){
-for(let i=0;i<25;i++){
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤";
-h.style.left=Math.random()*100+"vw";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),2000);
-}
+/* cursor glow */
+document.addEventListener('mousemove',e=>{
+cursor.style.left=e.clientX+'px';
+cursor.style.top=e.clientY+'px';
+});
+
+/* floating hearts */
+for(let j=0;j<25;j++){
+let s=document.createElement('span');
+s.innerHTML='❤';
+s.style.left=Math.random()*100+'vw';
+s.style.animationDuration=5+Math.random()*5+'s';
+bg.appendChild(s);
 }
 </script>
 
