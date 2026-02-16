@@ -26,7 +26,6 @@ color:white;
 100%{background-position:right;}
 }
 
-/* 3D card container */
 .container{
 position:relative;
 width:90%;
@@ -88,7 +87,6 @@ transform:scale(1.1);
 box-shadow:0 0 20px white;
 }
 
-/* counter */
 .counter{
 margin-top:15px;
 font-size:1.2rem;
@@ -96,7 +94,6 @@ font-weight:600;
 color:#fff;
 }
 
-/* yes/no buttons */
 #noBtn{
 position:absolute;
 background:#ff66b2;
@@ -113,64 +110,111 @@ color:white;
 
 <div class="container">
 
-<!-- 1. Cinematic Opening -->
+<!-- 1 -->
 <div class="card active">
-<h1>Out of 8 billion people…</h1>
-<p>somehow my days started revolving around one.</p>
+<h1>Chapter 1 — Then</h1>
+<p>
+Do you remember your last birthday, my love?<br>
+We were trying to win over each other… pretending we didn’t already care too much.<br><br>
+I still have those chats.<br>
+And today, a year later, I can proudly say — we are walking exactly towards what we promised back then.<br><br>
+People say birthday is your day…<br>
+but how do I tell them I celebrate you every single day?
+</p>
 <button onclick="next()">Continue</button>
 </div>
 
+<!-- 2 -->
 <div class="card">
-<h1>Hi Aishh ❤️</h1>
-<p>I didn’t know it that night…</p>
+<h1>Chapter 2 — The Night Everything Began</h1>
+<p>
+1 January 2025 — around 10 PM.<br><br>
+It was just another night in the world… but not in mine.<br><br>
+I didn’t realize it then — a simple conversation would slowly become the part of my day I wait for the most.
+</p>
 <button onclick="next()">Next</button>
 </div>
 
-<!-- 2. Live Counter -->
+<!-- 3 Counter -->
 <div class="card">
-<h1>Since 1 January 2025 — 10:00 PM</h1>
+<h1>Since That Night ❤️</h1>
 <div class="counter" id="counter"></div>
-<p>And not a single day I didn’t wait for your message.</p>
+<p>
+And not a single day passed where I didn’t wait for your message.
+</p>
 <button onclick="next()">Next</button>
 </div>
 
-<!-- 4. Letter pages -->
+<!-- 4 -->
 <div class="card">
-<h1>Page 1</h1>
-<p>The night we met felt normal.<br>But somehow… it wasn’t.</p>
+<h1>Chapter 3 — What You Did To Me</h1>
+<p>
+You made me experience what life actually feels like.<br><br>
+Before you… I was just existing.<br>
+More like an emotionless creature moving through days.<br><br>
+But now, every time we talk, it’s not my mind replying — it’s my heart speaking.
+</p>
 <button onclick="next()">Next</button>
 </div>
 
+<!-- 5 -->
 <div class="card">
-<h1>Page 2</h1>
-<p>You didn’t become my favorite person suddenly…<br>You became my habit first.</p>
+<h1>Chapter 4 — A Year Later</h1>
+<p>
+What changed in a year?<br><br>
+You became stronger. More confident. More mature. More independent.<br><br>
+And what didn’t change?<br>
+Us.<br><br>
+If anything… the love only multiplied.
+</p>
 <button onclick="next()">Next</button>
 </div>
 
+<!-- 6 -->
 <div class="card">
-<h1>Page 3</h1>
-<p>You changed things in me quietly.<br>I smile more now.</p>
+<h1>Chapter 5 — Distance</h1>
+<p>
+There is distance between us right now…<br><br>
+But somehow I’ve never felt you closer.<br><br>
+Because love is not measured in kilometers —<br>
+it’s measured in how naturally someone lives in your thoughts.<br><br>
+And you… live there permanently.
+</p>
 <button onclick="next()">Next</button>
 </div>
 
+<!-- 7 -->
 <div class="card">
-<h1>Page 4</h1>
-<p>I don’t know what the future holds…<br>but I know I want you in it.</p>
+<h1>Chapter 6 — Promise</h1>
+<p>
+I promise this isn’t just for this lifetime.<br><br>
+If life gives me another chance to exist — in any world, in any form —<br>
+I would still look for you.<br><br>
+And I would still choose you.<br>
+Every single time I’m born.<br><br>
+I lovveee youuu sooo mucchh meraaa bachhaaa ❤️
+</p>
 <button onclick="next()">Next</button>
 </div>
 
-<!-- 8. Proposal -->
+<!-- 8 Proposal -->
 <div class="card">
 <h1>Stay with me forever?</h1>
 <button onclick="accept()">Yes ❤️</button>
 <button id="noBtn" onmouseover="moveNo()">No</button>
 </div>
 
-<!-- 9. Final -->
+<!-- 9 Final -->
 <div class="card">
 <h1>Happy Birthday ❤️</h1>
-<p>No matter where life takes us…<br>
-I’m just really glad it took me to you.</p>
+<p>
+People think today is special because it’s your birthday…<br><br>
+But for me, every day became special since the day you existed in it.<br><br>
+We will be meeting very soon.<br>
+And when that day comes, it will feel less like meeting —<br>
+and more like finally reaching home.<br><br>
+If it’s you… I can wait a lifetime, cutuuu.
+</p>
 </div>
 
 </div>
@@ -196,21 +240,18 @@ function accept(){
 show(cards.length-1);
 }
 
-/* moving NO button */
 function moveNo(){
 const btn=document.getElementById("noBtn");
 btn.style.top=Math.random()*80+"%";
 btn.style.left=Math.random()*80+"%";
 }
 
-/* start music on first click */
 document.addEventListener("click",()=>{
 if(music.paused){
 music.play().catch(()=>{});
 }
 },{once:true});
 
-/* live counter */
 function update(){
 const start=new Date("2025-01-01T22:00:00");
 const now=new Date();
