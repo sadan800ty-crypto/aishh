@@ -2,270 +2,220 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For Aishh ❤️</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+<title>For My Love 💗</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI', sans-serif;
+}
 
 body{
-height:100vh;
+background: linear-gradient(135deg,#ff9ecb,#ffcce6);
 overflow:hidden;
-background:linear-gradient(135deg,#ff4da6,#ff99cc,#ff66b2);
-background-size:400% 400%;
-animation:bgMove 10s infinite alternate;
-display:flex;
-justify-content:center;
-align-items:center;
-perspective:1200px;
 color:white;
+text-align:center;
 }
 
-@keyframes bgMove{
-0%{background-position:left;}
-100%{background-position:right;}
-}
-
-.container{
-position:relative;
-width:90%;
-max-width:600px;
-height:420px;
-transform-style:preserve-3d;
-transition:1s;
-}
-
-.card{
+/* Pages */
+.page{
 position:absolute;
 width:100%;
-height:100%;
-padding:40px;
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(20px);
-border-radius:25px;
-box-shadow:0 20px 50px rgba(255,0,150,.4);
+height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-text-align:center;
-backface-visibility:hidden;
-transform:rotateY(180deg);
 transition:1s;
+opacity:0;
+pointer-events:none;
+padding:40px;
 }
 
-.card.active{
-transform:rotateY(0deg);
+.active{
+opacity:1;
+pointer-events:all;
+}
+
+/* Glass 3D Card */
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(15px);
+padding:40px;
+border-radius:25px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+transform-style:preserve-3d;
+animation:float 4s ease-in-out infinite;
+max-width:800px;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0px);}
+50%{transform:translateY(-15px);}
 }
 
 h1{
-font-size:2.4rem;
-margin-bottom:15px;
-text-shadow:0 0 20px rgba(255,0,150,.6);
+font-size:40px;
+margin-bottom:20px;
+text-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
 p{
-margin-top:10px;
-font-size:1.1rem;
-color:#fff0f7;
+font-size:18px;
+line-height:1.8;
 }
 
 button{
 margin-top:25px;
-padding:12px 30px;
+padding:12px 25px;
 border:none;
 border-radius:30px;
 background:white;
-color:#ff1493;
-font-weight:700;
+color:#ff4fa3;
+font-weight:bold;
 cursor:pointer;
-transition:.3s;
+transition:0.4s;
 }
 
 button:hover{
 transform:scale(1.1);
-box-shadow:0 0 20px white;
+background:#ffe6f2;
 }
 
-.counter{
-margin-top:15px;
-font-size:1.2rem;
-font-weight:600;
-color:#fff;
-}
-
-#noBtn{
+/* Floating Hearts */
+.heart{
 position:absolute;
-background:#ff66b2;
-color:white;
+color:#ff4fa3;
+font-size:20px;
+animation:floatHearts 6s linear infinite;
 }
+
+@keyframes floatHearts{
+0%{transform:translateY(100vh); opacity:1;}
+100%{transform:translateY(-10vh); opacity:0;}
+}
+
+input{
+padding:10px;
+border:none;
+border-radius:20px;
+margin-top:15px;
+text-align:center;
+}
+
 </style>
 </head>
 
 <body>
 
-<audio id="music" loop>
-<source src="dooron.mp3">
+<!-- Background Music -->
+<audio id="bgmusic" loop>
+<source src="https://files.catbox.moe/6w8n8k.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
+<!-- PASSWORD PAGE -->
+<div class="page active" id="passwordPage">
+<div class="card">
+<h1>💌 Secret Entry 💌</h1>
+<p>Only my baby can enter 💗</p>
+<input type="password" id="password" placeholder="Enter Password">
+<br>
+<button onclick="checkPassword()">Unlock My Heart 💞</button>
+</div>
+</div>
 
-<!-- 1 -->
-<div class="card active">
-<h1>Chapter 1 — Then</h1>
+<!-- INTRO PAGE -->
+<div class="page" id="introPage">
+<div class="card">
+<h1>Out of 8 Billion People… 💖</h1>
 <p>
-Do you remember your last birthday, my love?<br>
-We were trying to win over each other… pretending we didn’t already care too much.<br><br>
-I still have those chats.<br>
-And today, a year later, I can proudly say — we are walking exactly towards what we promised back then.<br><br>
-People say birthday is your day…<br>
-but how do I tell them I celebrate you every single day?
+Out of 8 billion people in this world…  
+my heart chose you.  
+And if I had to choose again —  
+I would still choose you. Every single time.
 </p>
-<button onclick="next()">Continue</button>
+<button onclick="nextPage()">Continue 💕</button>
+</div>
 </div>
 
-<!-- 2 -->
+<!-- MEMORY PAGE -->
+<div class="page" id="page1">
 <div class="card">
-<h1>Chapter 2 — The Night Everything Began</h1>
+<h1>🎀 That Special Birthday 🎀</h1>
 <p>
-1 January 2025 — around 10 PM.<br><br>
-It was just another night in the world… but not in mine.<br><br>
-I didn’t realize it then — a simple conversation would slowly become the part of my day I wait for the most.
+remember your last birthday my love? we were trying to win over each other. 
+i still have those chats, and i can proudly say a year later we are on the right track to fulfill what we promised to each other. 
+people say birthday is your day but how do i tell them i celebrate you everyday. 
+you made me experience what life is..yes i was just existing before,more of a emotionless creature but now every time we talk, its my emotion that speaks for me.
 </p>
-<button onclick="next()">Next</button>
+<button onclick="nextPage()">Next 💗</button>
+</div>
 </div>
 
-<!-- 3 Counter -->
+<!-- GROWTH PAGE -->
+<div class="page" id="page2">
 <div class="card">
-<h1>Since That Night ❤️</h1>
-<div class="counter" id="counter"></div>
+<h1>🌸 One Year Later 🌸</h1>
 <p>
-And not a single day passed where I didn’t wait for your message.
+what changed in a year? you became more confident,mature,independent.. 
+but what didnt changed? the love we had. it only grew multifolds. 
+i lovveee youuu soo mucchh meraaa bachhaaa and i promise this isnt just for this lifetime. 
+i wish to have you every time im born.
 </p>
-<button onclick="next()">Next</button>
+<button onclick="nextPage()">Next 💞</button>
+</div>
 </div>
 
-<!-- 4 -->
+<!-- DISTANCE PAGE -->
+<div class="page" id="page3">
 <div class="card">
-<h1>Chapter 3 — What You Did To Me</h1>
+<h1>💞 No Distance Can Break Us 💞</h1>
 <p>
-You made me experience what life actually feels like.<br><br>
-Before you… I was just existing.<br>
-More like an emotionless creature moving through days.<br><br>
-But now, every time we talk, it’s not my mind replying — it’s my heart speaking.
-</p>
-<button onclick="next()">Next</button>
-</div>
-
-<!-- 5 -->
-<div class="card">
-<h1>Chapter 4 — A Year Later</h1>
-<p>
-What changed in a year?<br><br>
-You became stronger. More confident. More mature. More independent.<br><br>
-And what didn’t change?<br>
-Us.<br><br>
-If anything… the love only multiplied.
-</p>
-<button onclick="next()">Next</button>
-</div>
-
-<!-- 6 -->
-<div class="card">
-<h1>Chapter 5 — Distance</h1>
-<p>
-There is distance between us right now…<br><br>
-But somehow I’ve never felt you closer.<br><br>
-Because love is not measured in kilometers —<br>
-it’s measured in how naturally someone lives in your thoughts.<br><br>
-And you… live there permanently.
-</p>
-<button onclick="next()">Next</button>
-</div>
-
-<!-- 7 -->
-<div class="card">
-<h1>Chapter 6 — Promise</h1>
-<p>
-I promise this isn’t just for this lifetime.<br><br>
-If life gives me another chance to exist — in any world, in any form —<br>
-I would still look for you.<br><br>
-And I would still choose you.<br>
-Every single time I’m born.<br><br>
-I lovveee youuu sooo mucchh meraaa bachhaaa ❤️
-</p>
-<button onclick="next()">Next</button>
-</div>
-
-<!-- 8 Proposal -->
-<div class="card">
-<h1>Stay with me forever?</h1>
-<button onclick="accept()">Yes ❤️</button>
-<button id="noBtn" onmouseover="moveNo()">No</button>
-</div>
-
-<!-- 9 Final -->
-<div class="card">
-<h1>Happy Birthday ❤️</h1>
-<p>
-People think today is special because it’s your birthday…<br><br>
-But for me, every day became special since the day you existed in it.<br><br>
-We will be meeting very soon.<br>
-And when that day comes, it will feel less like meeting —<br>
-and more like finally reaching home.<br><br>
-If it’s you… I can wait a lifetime, cutuuu.
+there is a distance between us right now but our love is stronger than ever 
+and we will be meeting very soonn. if its you i can wait lifetime cutuuu 💗  
+No matter the cities, no matter the time zones,  
+my heart always finds its way back to you.
 </p>
 </div>
-
 </div>
 
 <script>
-let current=0;
-const cards=document.querySelectorAll(".card");
-const music=document.getElementById("music");
 
-function show(index){
-cards[current].classList.remove("active");
-current=index;
-cards[current].classList.add("active");
-}
+let pages = ["passwordPage","introPage","page1","page2","page3"];
+let current = 0;
 
-function next(){
-if(current < cards.length-1){
-show(current+1);
+function checkPassword(){
+let pass = document.getElementById("password").value;
+if(pass === "01012025"){
+document.getElementById("bgmusic").play();
+nextPage();
+}else{
+alert("Wrong password baby 😝");
 }
 }
 
-function accept(){
-show(cards.length-1);
+function nextPage(){
+document.getElementById(pages[current]).classList.remove("active");
+current++;
+if(current < pages.length){
+document.getElementById(pages[current]).classList.add("active");
+}
 }
 
-function moveNo(){
-const btn=document.getElementById("noBtn");
-btn.style.top=Math.random()*80+"%";
-btn.style.left=Math.random()*80+"%";
-}
+/* Floating Hearts Generator */
+setInterval(()=>{
+let heart = document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+document.body.appendChild(heart);
 
-document.addEventListener("click",()=>{
-if(music.paused){
-music.play().catch(()=>{});
-}
-},{once:true});
+setTimeout(()=>{heart.remove();},6000);
+},500);
 
-function update(){
-const start=new Date("2025-01-01T22:00:00");
-const now=new Date();
-const diff=now-start;
-
-const days=Math.floor(diff/(1000*60*60*24));
-const hours=Math.floor((diff/(1000*60*60))%24);
-const minutes=Math.floor((diff/(1000*60))%60);
-
-document.getElementById("counter").innerHTML=
-days+" days "+hours+" hours "+minutes+" minutes";
-}
-setInterval(update,1000);
-update();
 </script>
 
 </body>
