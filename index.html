@@ -13,9 +13,9 @@ font-family:'Segoe UI', sans-serif;
 }
 
 body{
-background: linear-gradient(135deg,#ff9ecb,#ffcce6);
+background: linear-gradient(135deg,#ffd1e6,#ffb3d9,#ffc2e2);
 overflow:hidden;
-color:white;
+color:#fff;
 text-align:center;
 }
 
@@ -41,14 +41,15 @@ pointer-events:all;
 
 /* Glass 3D Card */
 .card{
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(15px);
+background:rgba(255,255,255,0.35);
+backdrop-filter:blur(18px);
 padding:40px;
-border-radius:25px;
-box-shadow:0 15px 40px rgba(0,0,0,0.2);
+border-radius:30px;
+box-shadow:0 20px 50px rgba(255,105,180,0.25);
 transform-style:preserve-3d;
 animation:float 4s ease-in-out infinite;
 max-width:800px;
+color:#ff2e93;
 }
 
 @keyframes float{
@@ -59,12 +60,14 @@ max-width:800px;
 h1{
 font-size:40px;
 margin-bottom:20px;
-text-shadow:0 5px 15px rgba(0,0,0,0.3);
+color:#ff2e93;
+text-shadow:0 5px 20px rgba(255,105,180,0.3);
 }
 
 p{
 font-size:18px;
 line-height:1.8;
+color:#c21870;
 }
 
 button{
@@ -72,8 +75,8 @@ margin-top:25px;
 padding:12px 25px;
 border:none;
 border-radius:30px;
-background:white;
-color:#ff4fa3;
+background:#ff2e93;
+color:white;
 font-weight:bold;
 cursor:pointer;
 transition:0.4s;
@@ -81,13 +84,13 @@ transition:0.4s;
 
 button:hover{
 transform:scale(1.1);
-background:#ffe6f2;
+background:#ff5cad;
 }
 
 /* Floating Hearts */
 .heart{
 position:absolute;
-color:#ff4fa3;
+color:#ff2e93;
 font-size:20px;
 animation:floatHearts 6s linear infinite;
 }
@@ -103,6 +106,9 @@ border:none;
 border-radius:20px;
 margin-top:15px;
 text-align:center;
+background:#fff0f7;
+color:#ff2e93;
+font-weight:bold;
 }
 
 </style>
@@ -188,7 +194,7 @@ let current = 0;
 
 function checkPassword(){
 let pass = document.getElementById("password").value;
-if(pass === "01012025"){
+if(pass === "aishh"){
 document.getElementById("bgmusic").play();
 nextPage();
 }else{
