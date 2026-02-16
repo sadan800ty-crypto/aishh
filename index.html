@@ -1,192 +1,170 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <title>For Aishh ❤️</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 body{
-background:radial-gradient(circle at center,#ff8fc4,#ff2e8a);
-height:100vh;overflow:hidden;color:white;
-cursor:none;
-}
-
-/* cursor glow */
-.cursor{
-width:20px;height:20px;border-radius:50%;
-position:fixed;pointer-events:none;
-background:white;box-shadow:0 0 20px white,0 0 40px #ff9ac9;
-transform:translate(-50%,-50%);
-}
-
-/* floating hearts particles */
-.bg span{
-position:absolute;color:white;opacity:.5;
-animation:rise linear infinite;
-}
-@keyframes rise{
-from{transform:translateY(100vh) scale(.5);}
-to{transform:translateY(-10vh) scale(1.2);}
-}
-
-/* 3D stage */
-.stage{
-perspective:1500px;
-width:100%;height:100vh;
-position:relative;
+height:100vh;
+overflow:hidden;
+background:black;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
 .card{
 position:absolute;
-width:100%;height:100%;
-display:flex;justify-content:center;align-items:center;
-flex-direction:column;text-align:center;
-backdrop-filter:blur(20px);
-background:rgba(255,255,255,.08);
-border-radius:20px;
-transform-style:preserve-3d;
-transform:rotateY(90deg);
-transition:1s cubic-bezier(.77,0,.18,1);
+width:90%;
+max-width:600px;
+text-align:center;
+padding:40px;
+opacity:0;
+transform:scale(.9);
+transition:1s ease;
 }
-.card.active{transform:rotateY(0);}
+.card.active{
+opacity:1;
+transform:scale(1);
+}
 
-h1{font-size:3rem;text-shadow:0 0 25px rgba(255,255,255,.8);}
-p{margin-top:15px;font-size:1.2rem;}
+h1{font-size:2.5rem;margin-bottom:15px;}
+p{margin-top:15px;font-size:1.1rem;color:#ffd9f2;}
 
 button{
-margin-top:35px;padding:12px 28px;border:none;border-radius:30px;
-background:white;color:#ff1493;font-weight:600;cursor:pointer;
+margin-top:25px;
+padding:12px 28px;
+border:none;
+border-radius:30px;
+background:#ff2e8a;
+color:white;
+font-weight:600;
+cursor:pointer;
 transition:.3s;
 }
-button:hover{transform:scale(1.15);box-shadow:0 0 20px white;}
+button:hover{transform:scale(1.1);}
 
-/* lock screen */
-#lock{
-position:fixed;width:100%;height:100vh;background:#ff2e8a;
-display:flex;flex-direction:column;justify-content:center;align-items:center;
-z-index:10;
-}
-input{padding:12px;border:none;border-radius:20px;margin-top:15px;text-align:center;}
+#yesBtn{background:#ff2e8a;}
+#noBtn{background:#555;position:absolute;}
 
-/* typing */
-.typing{border-right:3px solid white;white-space:nowrap;overflow:hidden;width:0;animation:typing 3s steps(30,end) forwards;}
-@keyframes typing{to{width:100%;}}
+.hidden{display:none;}
 
-/* envelope */
-.envelope{
-width:260px;height:160px;background:white;border-radius:12px;
-cursor:pointer;position:relative;overflow:hidden;
+.counter{
+font-size:1.3rem;
+margin-top:15px;
+color:#ff9ac9;
 }
-.letter{
-position:absolute;top:100%;width:100%;padding:20px;color:#ff1493;background:white;transition:1s;
-}
-.envelope.open .letter{top:-150px;}
-
-/* gallery */
-.gallery img{
-width:180px;border-radius:15px;margin:10px;transition:.4s;
-box-shadow:0 0 20px rgba(255,255,255,.6);
-}
-.gallery img:hover{transform:scale(1.15) rotate(2deg);}
 </style>
-
 </head>
 
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="bg" id="bg"></div>
-
-<div id="lock">
-<h1>Enter Password 💖</h1>
-<input type="password" id="pass">
-<button onclick="unlock()">Enter</button>
-</div>
-
 <audio id="music" loop>
-<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3">
+<source src="dooron.mp3">
 </audio>
 
-<div class="stage">
-
-<div class="card" id="c0">
-<h1 class="typing">Happy Birthday Aishh 🎂</h1>
-<p>18 February — my universe started shining</p>
-<button onclick="next()">Begin</button>
+<!-- 1. CINEMATIC OPENING -->
+<div class="card active" id="c0">
+<h1>Out of 8 billion people…</h1>
+<p>somehow my days started revolving around one.</p>
+<button onclick="next()">Continue</button>
 </div>
 
 <div class="card" id="c1">
-<h1>You Are My Magic ✨</h1>
-<p>Every second feels special with you</p>
+<h1>Hi Aishh.</h1>
+<p>I didn’t know it that night…</p>
 <button onclick="next()">Next</button>
 </div>
 
+<!-- 2. LIVE COUNTER -->
 <div class="card" id="c2">
-<h1>My Heart 💌</h1>
-<div class="envelope" onclick="this.classList.toggle('open')">
-<div class="letter">
-Write your personal message here ❤️
-</div>
-</div>
+<h1>Since 1 January 2025, 10:00 PM</h1>
+<div class="counter" id="timeTogether"></div>
+<p>And not a single day I didn’t wait for your message.</p>
 <button onclick="next()">Next</button>
 </div>
 
+<!-- 4. MULTI PAGE LETTER -->
 <div class="card" id="c3">
-<h1>Our Memories 📸</h1>
-<div class="gallery">
-<img src="https://picsum.photos/300?1">
-<img src="https://picsum.photos/300?2">
-<img src="https://picsum.photos/300?3">
-</div>
+<h1>Page 1</h1>
+<p>The night we met felt normal.<br>But somehow… it wasn’t.</p>
 <button onclick="next()">Next</button>
 </div>
 
 <div class="card" id="c4">
-<h1>Will You Stay With Me Forever? 💍</h1>
-<p>I Love You Aishh ❤️</p>
+<h1>Page 2</h1>
+<p>You didn’t become my favorite person suddenly…<br>You became my habit first.</p>
+<button onclick="next()">Next</button>
 </div>
 
+<div class="card" id="c5">
+<h1>Page 3</h1>
+<p>You changed things in me quietly.<br>I smile more now.</p>
+<button onclick="next()">Next</button>
+</div>
+
+<div class="card" id="c6">
+<h1>Page 4</h1>
+<p>I don’t know what the future holds…<br>but I know I want you in it.</p>
+<button onclick="next()">Next</button>
+</div>
+
+<!-- 8. PROPOSAL -->
+<div class="card" id="c7">
+<h1>Stay with me forever?</h1>
+<button id="yesBtn" onclick="accept()">Yes ❤️</button>
+<button id="noBtn" onmouseover="moveNo()">No</button>
+</div>
+
+<!-- 9. FINAL EMOTIONAL END -->
+<div class="card" id="c8">
+<h1>Happy Birthday ❤️</h1>
+<p>No matter where life takes us…<br>
+I’m just really glad it took me to you.</p>
 </div>
 
 <script>
-let i=0, unlocked=false;
+let i=0;
 const cards=document.querySelectorAll('.card');
-cards[0].classList.add('active');
-
-function unlock(){
-if(pass.value.toLowerCase()==='aishh'){
-lock.style.display='none';
-music.play().catch(()=>{});
-unlocked=true;
-}else alert("Wrong password");
-}
+const music=document.getElementById("music");
 
 function next(){
-if(!unlocked)return;
-if(i<cards.length-1){
-cards[i].classList.remove('active');
+cards[i].classList.remove("active");
 i++;
-cards[i].classList.add('active');
-}
+cards[i].classList.add("active");
+if(i===1) music.play().catch(()=>{});
 }
 
-/* cursor glow */
-document.addEventListener('mousemove',e=>{
-cursor.style.left=e.clientX+'px';
-cursor.style.top=e.clientY+'px';
-});
-
-/* floating hearts */
-for(let j=0;j<25;j++){
-let s=document.createElement('span');
-s.innerHTML='❤';
-s.style.left=Math.random()*100+'vw';
-s.style.animationDuration=5+Math.random()*5+'s';
-bg.appendChild(s);
+function accept(){
+cards[i].classList.remove("active");
+document.getElementById("c8").classList.add("active");
 }
+
+function moveNo(){
+let btn=document.getElementById("noBtn");
+btn.style.top=Math.random()*80+"vh";
+btn.style.left=Math.random()*80+"vw";
+}
+
+/* Live Counter */
+function updateCounter(){
+let start=new Date("January 1, 2025 22:00:00");
+let now=new Date();
+let diff=now-start;
+
+let days=Math.floor(diff/(1000*60*60*24));
+let hours=Math.floor((diff/(1000*60*60))%24);
+let minutes=Math.floor((diff/(1000*60))%60);
+
+document.getElementById("timeTogether").innerHTML=
+days+" days "+hours+" hours "+minutes+" minutes";
+}
+setInterval(updateCounter,1000);
+updateCounter();
 </script>
 
 </body>
