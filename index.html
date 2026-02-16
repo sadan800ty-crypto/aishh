@@ -128,44 +128,62 @@ I’m just really glad it took me to you.</p>
 </div>
 
 <script>
-let i=0;
-const cards=document.querySelectorAll('.card');
-const music=document.getElementById("music");
+let current = 0;
+const cards = document.querySelectorAll('.card');
+const music = document.getElementById("music");
+
+function showCard(index){
+    if(index < 0 || index >= cards.length) return;
+
+    cards[current].classList.remove("active");
+    current = index;
+    cards[current].classList.add("active");
+}
 
 function next(){
-cards[i].classList.remove("active");
-i++;
-cards[i].classList.add("active");
-if(i===1) music.play().catch(()=>{});
+    if(current < cards.length - 1){
+        showCard(current + 1);
+    }
 }
 
 function accept(){
-cards[i].classList.remove("active");
-document.getElementById("c8").classList.add("active");
+    showCard(cards.length - 1);
 }
 
 function moveNo(){
-let btn=document.getElementById("noBtn");
-btn.style.top=Math.random()*80+"vh";
-btn.style.left=Math.random()*80+"vw";
+    const btn = document.getElementById("noBtn");
+    btn.style.position = "fixed";
+    btn.style.top = Math.random() * 80 + "vh";
+    btn.style.left = Math.random() * 80 + "vw";
 }
+
+/* Start music after first click */
+document.body.addEventListener("click", function startMusic(){
+    music.play().catch(()=>{});
+    document.body.removeEventListener("click", startMusic);
+});
 
 /* Live Counter */
 function updateCounter(){
-let start=new Date("January 1, 2025 22:00:00");
-let now=new Date();
-let diff=now-start;
+    const start = new Date("January 1, 2025 22:00:00");
+    const now = new Date();
+    const diff = now - start;
 
-let days=Math.floor(diff/(1000*60*60*24));
-let hours=Math.floor((diff/(1000*60*60))%24);
-let minutes=Math.floor((diff/(1000*60))%60);
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const minutes = Math.floor((diff / (1000*60)) % 60);
 
-document.getElementById("timeTogether").innerHTML=
-days+" days "+hours+" hours "+minutes+" minutes";
+    const counter = document.getElementById("timeTogether");
+    if(counter){
+        counter.innerHTML = 
+        days + " days " + hours + " hours " + minutes + " minutes";
+    }
 }
-setInterval(updateCounter,1000);
+
+setInterval(updateCounter, 1000);
 updateCounter();
 </script>
 
 </body>
 </html>
+
