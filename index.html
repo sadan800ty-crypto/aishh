@@ -1,42 +1,276 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <title>For Aishh ❤️</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
-body{height:100vh;overflow:hidden;background:linear-gradient(135deg,#ff4da6,#ff99cc,#ff66b2);display:flex;justify-content:center;align-items:center;color:white;transition:background 3s ease;}
-.container{position:relative;width:90%;max-width:640px;height:440px;perspective:1200px;}
-.card{position:absolute;width:100%;height:100%;padding:40px;border-radius:25px;background:rgba(255,255,255,.15);backdrop-filter:blur(20px);box-shadow:0 20px 50px rgba(255,0,150,.4);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;transform:rotateY(180deg);backface-visibility:hidden;transition:1s;}
-.card.active{transform:rotateY(0);}
-h1{font-size:2.3rem;margin-bottom:15px;} p{margin-top:10px;color:#fff0f7;} button{margin-top:25px;padding:12px 28px;border:none;border-radius:30px;background:white;color:#ff1493;font-weight:700;cursor:pointer;} button:hover{transform:scale(1.1);} .counter{margin-top:10px;font-weight:600}
-#noBtn{position:absolute;background:#ff66b2;color:white}
-.type{border-right:2px solid white;white-space:pre-line}
-.polaroid{width:130px;background:white;color:black;padding:8px;border-radius:10px;position:absolute;cursor:grab;box-shadow:0 10px 20px rgba(0,0,0,.4)}
-.secret{position:absolute;font-size:22px;cursor:pointer;opacity:.6}
+
+body{
+height:100vh;
+overflow:hidden;
+background:linear-gradient(135deg,#ff4da6,#ff99cc,#ff66b2);
+background-size:400% 400%;
+animation:bgMove 10s infinite alternate;
+display:flex;
+justify-content:center;
+align-items:center;
+perspective:1200px;
+color:white;
+}
+
+@keyframes bgMove{
+0%{background-position:left;}
+100%{background-position:right;}
+}
+
+/* 3D card container */
+.container{
+position:relative;
+width:90%;
+max-width:600px;
+height:420px;
+transform-style:preserve-3d;
+transition:1s;
+}
+
+.card{
+position:absolute;
+width:100%;
+height:100%;
+padding:40px;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+border-radius:25px;
+box-shadow:0 20px 50px rgba(255,0,150,.4);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+backface-visibility:hidden;
+transform:rotateY(180deg);
+transition:1s;
+}
+
+.card.active{ transform:rotateY(0deg); }
+
+h1{ font-size:2.4rem;margin-bottom:15px;text-shadow:0 0 20px rgba(255,0,150,.6);}
+p{margin-top:10px;font-size:1.1rem;color:#fff0f7;}
+
+button{
+margin-top:25px;padding:12px 30px;border:none;border-radius:30px;
+background:white;color:#ff1493;font-weight:700;cursor:pointer;transition:.3s;
+}
+button:hover{transform:scale(1.1);box-shadow:0 0 20px white;}
+
+.counter{margin-top:15px;font-size:1.2rem;font-weight:600;color:#fff;}
+
+#noBtn{position:absolute;background:#ff66b2;color:white;}
+
+/* typing cursor */
+.typing::after{
+content:"|";
+animation:blink 1s infinite;
+}
+@keyframes blink{50%{opacity:0}}
+
+/* blackout screen */
+#blackout{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:black;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:2rem;
+opacity:0;
+pointer-events:none;
+transition:2s;
+z-index:999;
+}
+
+/* memory popup */
+#memory{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,.8);
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+opacity:0;
+pointer-events:none;
+transition:1s;
+z-index:999;
+}
+
+#memoryBox{
+background:#111;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 40px pink;
+}
+
+/* sunrise ending */
+#sunrise{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(#000,#1a0033,#ff99cc,#ffd6ec,#fff);
+opacity:0;
+transition:6s;
+z-index:998;
+}
 </style>
 </head>
+
 <body>
-<audio id="music" loop><source src="dooron.mp3"></audio>
-<div class="container">
-<div class="card active"><h1>Out of 8 billion people…</h1><p>somehow my days started revolving around one.</p><button onclick="next()">Continue</button></div>
-<div class="card"><h1 id="name">Hi Aishh ❤️</h1><p>I didn’t know it that night…</p><button onclick="next()">Next</button></div>
-<div class="card"><h1>Since 1 January 2025 — 10:00 PM</h1><div class="counter" id="counter"></div><button onclick="next()">Next</button></div>
-<div class="card"><h1>Message</h1><p class="type" id="typing"></p><button onclick="next()">Next</button></div>
-<div class="card" id="polaroidPage"><h1>Memories 📸</h1></div>
-<div class="card" id="blackout"><h1>If I never met you…</h1></div>
-<div class="card"><h1>Stay with me forever?</h1><button onclick="accept()">Yes ❤️</button><button id="noBtn" onmouseover="moveNo()">No</button></div>
-<div class="card" id="final"><h1>Happy Birthday ❤️</h1><p>No matter where life takes us…<br>I’m glad it took me to you.</p></div>
+
+<div id="blackout">I think… I fell in love with you.</div>
+
+<div id="memory">
+<div id="memoryBox">
+<h1>1 January 2025 — 10:00 PM</h1>
+<p>The moment everything started.</p>
+<button onclick="closeMemory()">I remember ❤️</button>
 </div>
+</div>
+
+<div id="sunrise"></div>
+
+<audio id="music" loop>
+<source src="dooron.mp3">
+</audio>
+
+<div class="container">
+
+<div class="card active">
+<h1 class="typing" id="type1"></h1>
+<button onclick="next()">Continue</button>
+</div>
+
+<div class="card">
+<h1>Hi Aishh ❤️</h1>
+<p class="typing" id="type2"></p>
+<button onclick="next()">Next</button>
+</div>
+
+<div class="card">
+<h1>Since 1 January 2025 — 10:00 PM</h1>
+<div class="counter" id="counter"></div>
+<p>And not a single day I didn’t wait for your message.</p>
+<button onclick="next()">Next</button>
+</div>
+
+<div class="card">
+<h1>Page 1</h1>
+<p>The night we met felt normal.<br>But somehow… it wasn’t.</p>
+<button onclick="nextMemory()">Next</button>
+</div>
+
+<div class="card">
+<h1>Page 2</h1>
+<p>You didn’t become my favorite person suddenly…<br>You became my habit first.</p>
+<button onclick="next()">Next</button>
+</div>
+
+<div class="card">
+<h1>Page 3</h1>
+<p>You changed things in me quietly.<br>I smile more now.</p>
+<button onclick="next()">Next</button>
+</div>
+
+<div class="card">
+<h1>Stay with me forever?</h1>
+<button onclick="accept()">Yes ❤️</button>
+<button id="noBtn" onmouseover="moveNo()">No</button>
+</div>
+
+<div class="card">
+<h1>Happy Birthday ❤️</h1>
+<p>No matter where life takes us…<br>I’m just really glad it took me to you.</p>
+<button onclick="sunrise()">One last thing</button>
+</div>
+
+</div>
+
 <script>
-let current=0;const cards=document.querySelectorAll('.card');const music=document.getElementById('music');function show(i){cards[current].classList.remove('active');current=i;cards[current].classList.add('active');if(i==1)music.play().catch(()=>{});if(i==5)setTimeout(()=>show(6),2500);if(i==7){document.body.style.background='linear-gradient(135deg,#ffd1dc,#ffe6f0,#fff0f5)';setTimeout(()=>{let b=document.createElement('p');b.innerHTML='Also… I\'d still choose you in every universe.';document.getElementById('final').appendChild(b);},5000)}}function next(){if(current<cards.length-1)show(current+1)}function accept(){show(cards.length-1)}function moveNo(){const b=noBtn;b.style.top=Math.random()*80+'%';b.style.left=Math.random()*80+'%'}
-setInterval(()=>{let s=new Date('2025-01-01T22:00:00'),d=new Date()-s;let day=Math.floor(d/86400000),h=Math.floor(d/3600000)%24,m=Math.floor(d/60000)%60;counter.innerHTML=day+' days '+h+' hours '+m+' minutes';},1000);
-let text="I was pretending to be normal...\nBut I kept waiting for your reply.";let i=0;function type(){if(i<text.length){typing.textContent+=text[i++];setTimeout(type,40)}}setTimeout(type,800);
-let page=document.getElementById('polaroidPage');for(let k=0;k<4;k++){let img=document.createElement('div');img.className='polaroid';img.style.top=Math.random()*60+'%';img.style.left=Math.random()*70+'%';img.innerHTML='<img src=https://picsum.photos/200?'+k+' width=100%><br>my favorite moment';page.appendChild(img);img.onmousedown=e=>{let ox=e.offsetX,oy=e.offsetY;document.onmousemove=m=>{img.style.left=m.pageX-ox+'px';img.style.top=m.pageY-oy+'px'};document.onmouseup=()=>document.onmousemove=null}}
-for(let j=0;j<6;j++){let h=document.createElement('div');h.className='secret';h.textContent='💗';h.style.top=Math.random()*90+'%';h.style.left=Math.random()*90+'%';h.onclick=()=>alert('I re-read our chats');document.body.appendChild(h)}
-document.addEventListener('mousemove',e=>{let n=document.getElementById('name');if(!n)return;let r=n.getBoundingClientRect();if(Math.abs(e.clientX-r.left)<80&&Math.abs(e.clientY-r.top)<80){let s=document.createElement('div');s.textContent='💕';s.style.position='fixed';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';document.body.appendChild(s);setTimeout(()=>s.remove(),800)}});
+let current=0;
+const cards=document.querySelectorAll(".card");
+const music=document.getElementById("music");
+
+function show(i){
+cards[current].classList.remove("active");
+current=i;
+cards[current].classList.add("active");
+}
+
+function next(){ if(current<cards.length-1) show(current+1); }
+
+function accept(){
+document.getElementById("blackout").style.opacity=1;
+setTimeout(()=>show(cards.length-1),2500);
+}
+
+function moveNo(){
+const btn=document.getElementById("noBtn");
+btn.style.top=Math.random()*80+"%";
+btn.style.left=Math.random()*80+"%";
+}
+
+document.addEventListener("click",()=>{
+if(music.paused) music.play().catch(()=>{});
+},{once:true});
+
+/* typing effect */
+function typeText(id,text,speed=40){
+let i=0;
+const el=document.getElementById(id);
+function t(){
+if(i<text.length){ el.innerHTML+=text.charAt(i); i++; setTimeout(t,speed);}
+}
+t();
+}
+typeText("type1","Out of 8 billion people…");
+typeText("type2","I didn’t know it that night…");
+
+/* memory popup */
+function nextMemory(){
+document.getElementById("memory").style.opacity=1;
+document.getElementById("memory").style.pointerEvents="auto";
+}
+function closeMemory(){
+document.getElementById("memory").style.opacity=0;
+document.getElementById("memory").style.pointerEvents="none";
+next();
+}
+
+/* sunrise ending */
+function sunrise(){
+document.getElementById("sunrise").style.opacity=1;
+}
+
+/* counter */
+function update(){
+const start=new Date("2025-01-01T22:00:00");
+const now=new Date();
+const diff=now-start;
+const d=Math.floor(diff/86400000);
+const h=Math.floor(diff/3600000)%24;
+const m=Math.floor(diff/60000)%60;
+document.getElementById("counter").innerHTML=d+" days "+h+" hours "+m+" minutes";
+}
+setInterval(update,1000);
+update();
 </script>
+
 </body>
 </html>
