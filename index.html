@@ -110,49 +110,32 @@ input{
  100%{transform:translateY(-10vh); opacity:0;}
 }
 
-/* Chat Page */
-.chatBox{
- width:95%;
- max-width:420px;
- height:75vh;
- background:rgba(255,255,255,0.35);
- backdrop-filter:blur(18px);
- border-radius:25px;
- padding:15px;
- overflow-y:auto;
- display:flex;
- flex-direction:column;
- gap:10px;
+/* Proposal Celebration */
+.foreverText{
+ font-size:60px;
+ color:#ff007f;
+ animation:glow 1.5s infinite alternate;
 }
 
-.msg{
- padding:10px 14px;
- border-radius:18px;
- max-width:70%;
- font-size:14px;
+@keyframes glow{
+ from{text-shadow:0 0 10px #ff4fa3;}
+ to{text-shadow:0 0 30px #ff007f;}
 }
 
-.me{
- background:#ff2e93;
- color:white;
- align-self:flex-end;
+/* Hug Animation */
+.hug{
+ font-size:80px;
+ animation:hugmove 1s infinite alternate;
 }
 
-.her{
- background:white;
- color:#ff2e93;
- align-self:flex-start;
+@keyframes hugmove{
+ from{transform:scale(1);}
+ to{transform:scale(1.2);}
 }
 
-.time{
- font-size:10px;
- opacity:0.7;
- margin-top:3px;
-}
-
-.typing{
- font-size:12px;
- opacity:0.7;
+/* NEW — calm pause fade */
+#pauseTitle,#pauseText,#pauseBtn{
+ transition:opacity 1.5s ease;
 }
 </style>
 </head>
@@ -174,22 +157,93 @@ input{
  </div>
 </div>
 
-<!-- FOREVER PAGE -->
-<div class="page" id="foreverPage">
+<!-- INTRO PAGE -->
+<div class="page" id="introPage">
  <div class="card">
-  <div style="font-size:60px">🤗💞🤗</div>
-  <div style="font-size:50px;color:#ff007f">Forever Together 💖</div>
+  <h1>Out of 8 Billion People… 💖</h1>
+  <p>
+   Out of 8 billion people in this world… my heart chose you.
+   And if I had to choose again — I would still choose you.
+   Every single time.
+  </p>
+  <button onclick="nextPage()">Continue 💕</button>
  </div>
 </div>
 
-<!-- NEW CHAT PAGE -->
-<div class="page" id="chatPage">
-  <div class="chatBox" id="chatBox"></div>
+<!-- NEW PAUSE PAGE -->
+<div class="page" id="pausePage">
+ <div class="card">
+  <h1 id="pauseTitle">stay here for 5 seconds…</h1>
+  <p id="pauseText"></p>
+  <button id="pauseBtn" onclick="nextPage()" style="display:none;">continue 💞</button>
+ </div>
+</div>
+
+<!-- MEMORY PAGE -->
+<div class="page" id="page1">
+ <div class="card">
+  <h1>🎀 That Special Birthday 🎀</h1>
+  <p>
+   remember your last birthday my love? we were trying to win over each other.
+   i still have those chats, and i can proudly say a year later we are on the right track
+   to fulfill what we promised to each other.
+   people say birthday is your day but how do i tell them i celebrate you everyday.
+   you made me experience what life is..yes i was just existing before,
+   more of a emotionless creature but now every time we talk, its my emotion that speaks for me.
+  </p>
+  <button onclick="nextPage()">Next 💗</button>
+ </div>
+</div>
+
+<!-- GROWTH PAGE -->
+<div class="page" id="page2">
+ <div class="card">
+  <h1>🌸 One Year Later 🌸</h1>
+  <p>
+   what changed in a year? you became more confident,mature,independent..
+   but what didnt changed? the love we had.
+   it only grew multifolds.
+   i lovveee youuu soo mucchh meraaa bachhaaa and i promise this isnt just for this lifetime.
+   i wish to have you every time im born.
+  </p>
+  <button onclick="nextPage()">Next 💞</button>
+ </div>
+</div>
+
+<!-- DISTANCE PAGE -->
+<div class="page" id="page3">
+ <div class="card">
+  <h1>💞 No Distance Can Break Us 💞</h1>
+  <p>
+   there is a distance between us right now but our love is stronger than ever
+   and we will be meeting very soonn.
+   if its you i can wait lifetime cutuuu 💗
+   No matter the cities, no matter the time zones,
+   my heart always finds its way back to you.
+  </p>
+  <button onclick="nextPage()">One Last Thing 💍</button>
+ </div>
+</div>
+
+<!-- PROPOSAL PAGE -->
+<div class="page" id="proposalPage">
+ <div class="card">
+  <h1>Will You Stay With Me Forever? 💍</h1>
+  <button onclick="acceptLove()">Yes 💖</button>
+  <button id="noBtn">No 😝</button>
+ </div>
+</div>
+
+<!-- FOREVER PAGE -->
+<div class="page" id="foreverPage">
+ <div class="card">
+  <div class="hug">🤗💞🤗</div>
+  <div class="foreverText">Forever Together 💖</div>
+ </div>
 </div>
 
 <script>
-
-let pages = ["passwordPage","foreverPage","chatPage"];
+let pages = ["passwordPage","introPage","pausePage","page1","page2","page3","proposalPage","foreverPage"];
 let current = 0;
 
 /* PASSWORD */
@@ -210,65 +264,88 @@ function nextPage(){
  if(current < pages.length){
    let page = document.getElementById(pages[current]);
    page.classList.add("active");
+   startTyping(page);
 
-   if(pages[current]==="foreverPage"){
-      setTimeout(nextPage,4000);
-   }
-
-   if(pages[current]==="chatPage"){
-      startChat();
+   if(pages[current]==="pausePage"){
+     runPauseScene();
    }
  }
 }
 
-/* CHAT SYSTEM */
-
-const chatScript = [
- "you reached home? 🥺",
- "i keep smiling like an idiot after today",
- "i still cant believe you're mine",
- "promise me you wont ever leave",
- "goodnight jaan 💗"
-];
-
-function time(){
- let d=new Date();
- return d.getHours()+":"+String(d.getMinutes()).padStart(2,'0');
-}
-
-function sendHerMessage(text){
- let box=document.getElementById("chatBox");
-
- let typing=document.createElement("div");
- typing.className="typing";
- typing.innerText="typing...";
- box.appendChild(typing);
- box.scrollTop=box.scrollHeight;
-
- setTimeout(()=>{
-  typing.remove();
-
-  let msg=document.createElement("div");
-  msg.className="msg her";
-  msg.innerHTML=text+"<div class='time'>"+time()+"</div>";
-  box.appendChild(msg);
-  box.scrollTop=box.scrollHeight;
-
- },1200+Math.random()*1500);
-}
-
-function startChat(){
- let i=0;
- function loop(){
-   if(i<chatScript.length){
-     sendHerMessage(chatScript[i]);
-     i++;
-     setTimeout(loop,3500);
+/* TYPEWRITER */
+function startTyping(page){
+ let elements = page.querySelectorAll("h1, p");
+ elements.forEach(el=>{
+   if(el.dataset.done) return;
+   el.dataset.done=true;
+   let text=el.innerHTML.trim();
+   el.innerHTML="";
+   let i=0;
+   function type(){
+     if(i<text.length){
+       el.innerHTML+=text.charAt(i);
+       i++;
+       setTimeout(type,20);
+     }
    }
- }
- loop();
+   type();
+ });
 }
 
+/* PAUSE SCENE */
+function runPauseScene(){
+ const title=document.getElementById("pauseTitle");
+ const text=document.getElementById("pauseText");
+ const btn=document.getElementById("pauseBtn");
+
+ setTimeout(()=>{title.innerText="this is how peaceful my life feels when you’re around";},5000);
+ setTimeout(()=>{text.innerText="you make my chaos quiet.";text.style.opacity=1;},6500);
+ setTimeout(()=>{btn.style.display="inline-block";btn.style.opacity=1;},8000);
+}
+
+/* RUNAWAY BUTTON */
+let noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",function(){
+ noBtn.style.position="absolute";
+ noBtn.style.top=Math.random()*80+"%";
+ noBtn.style.left=Math.random()*80+"%";
+});
+
+/* ACCEPT LOVE */
+function acceptLove(){
+ nextPage();
+ for(let i=0;i<30;i++){
+   let heart=document.createElement("div");
+   heart.classList.add("heart");
+   heart.innerHTML="💖";
+   heart.style.left=Math.random()*100+"vw";
+   heart.style.fontSize=(Math.random()*30+20)+"px";
+   document.body.appendChild(heart);
+   setTimeout(()=>{heart.remove();},4000);
+ }
+}
+
+/* FLOATING HEARTS */
+setInterval(()=>{
+ let heart=document.createElement("div");
+ heart.classList.add("heart");
+ heart.innerHTML="💗";
+ heart.style.left=Math.random()*100+"vw";
+ heart.style.fontSize=(Math.random()*20+15)+"px";
+ document.body.appendChild(heart);
+ setTimeout(()=>{heart.remove();},6000);
+},600);
 </script>
+
+<!-- ===== CINEMATIC UPGRADE LAYER (SAFE ADDON) ===== -->
+<style>
+@keyframes breathe{
+0%{background:linear-gradient(135deg,#ffd1e6,#ffb3d9,#ffc2e2);}
+50%{background:linear-gradient(135deg,#ffc2e2,#ff9fcb,#ffb3d9);}
+100%{background:linear-gradient(135deg,#ffd1e6,#ffb3d9,#ffc2e2);}
+}
+body{animation:breathe 40s ease-in-out infinite;}
+</style>
+
 </body>
 </html>
