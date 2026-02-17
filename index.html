@@ -133,7 +133,7 @@ input{
  to{transform:scale(1.2);}
 }
 
-/* NEW — calm pause fade */
+/* Calm pause fade */
 #pauseTitle,#pauseText,#pauseBtn{
  transition:opacity 1.5s ease;
 }
@@ -170,7 +170,17 @@ input{
  </div>
 </div>
 
-<!-- NEW PAUSE PAGE -->
+<!-- TIME COUNTER PAGE -->
+<div class="page" id="counterPage">
+ <div class="card">
+  <h1>Since The Night We Became Us 💞</h1>
+  <p>We have been together for:</p>
+  <h1 id="loveTimer">loading...</h1>
+  <button onclick="nextPage()">Continue 💗</button>
+ </div>
+</div>
+
+<!-- PAUSE PAGE -->
 <div class="page" id="pausePage">
  <div class="card">
   <h1 id="pauseTitle">stay here for 5 seconds…</h1>
@@ -243,7 +253,8 @@ input{
 </div>
 
 <script>
-let pages = ["passwordPage","introPage","pausePage","page1","page2","page3","proposalPage","foreverPage"];
+
+let pages = ["passwordPage","introPage","counterPage","pausePage","page1","page2","page3","proposalPage","foreverPage"];
 let current = 0;
 
 /* PASSWORD */
@@ -269,7 +280,32 @@ function nextPage(){
    if(pages[current]==="pausePage"){
      runPauseScene();
    }
+
+   if(pages[current]==="counterPage"){
+     startLoveTimer();
+   }
  }
+}
+
+/* LOVE TIMER */
+function startLoveTimer(){
+ const startDate = new Date("January 1, 2025 22:00:00").getTime();
+ function updateTimer(){
+   const now = new Date().getTime();
+   const diff = now - startDate;
+
+   const days = Math.floor(diff/(1000*60*60*24));
+   const hours = Math.floor((diff/(1000*60*60))%24);
+   const minutes = Math.floor((diff/(1000*60))%60);
+   const seconds = Math.floor((diff/1000)%60);
+
+   const el = document.getElementById("loveTimer");
+   if(el){
+     el.innerHTML = days+" days "+hours+" hrs "+minutes+" mins "+seconds+" secs 💖";
+   }
+ }
+ setInterval(updateTimer,1000);
+ updateTimer();
 }
 
 /* TYPEWRITER */
@@ -335,17 +371,8 @@ setInterval(()=>{
  document.body.appendChild(heart);
  setTimeout(()=>{heart.remove();},6000);
 },600);
-</script>
 
-<!-- ===== CINEMATIC UPGRADE LAYER (SAFE ADDON) ===== -->
-<style>
-@keyframes breathe{
-0%{background:linear-gradient(135deg,#ffd1e6,#ffb3d9,#ffc2e2);}
-50%{background:linear-gradient(135deg,#ffc2e2,#ff9fcb,#ffb3d9);}
-100%{background:linear-gradient(135deg,#ffd1e6,#ffb3d9,#ffc2e2);}
-}
-body{animation:breathe 40s ease-in-out infinite;}
-</style>
+</script>
 
 </body>
 </html>
