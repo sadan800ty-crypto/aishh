@@ -133,9 +133,12 @@ input{
  to{transform:scale(1.2);}
 }
 
-/* Calm pause fade */
-#pauseTitle,#pauseText,#pauseBtn{
- transition:opacity 1.5s ease;
+/* Counter Style */
+#timeTogether{
+ font-size:22px;
+ margin-top:15px;
+ color:#ff007f;
+ font-weight:bold;
 }
 </style>
 </head>
@@ -173,19 +176,10 @@ input{
 <!-- TIME COUNTER PAGE -->
 <div class="page" id="counterPage">
  <div class="card">
-  <h1>Since The Night We Became Us 💞</h1>
-  <p>We have been together for:</p>
-  <h1 id="loveTimer">loading...</h1>
-  <button onclick="nextPage()">Continue 💗</button>
- </div>
-</div>
-
-<!-- PAUSE PAGE -->
-<div class="page" id="pausePage">
- <div class="card">
-  <h1 id="pauseTitle">stay here for 5 seconds…</h1>
-  <p id="pauseText"></p>
-  <button id="pauseBtn" onclick="nextPage()" style="display:none;">continue 💞</button>
+  <h1>⏳ Our Time Together ⏳</h1>
+  <p>Since the moment we met… my life started counting differently.</p>
+  <div id="timeTogether"></div>
+  <button onclick="nextPage()">Next 💗</button>
  </div>
 </div>
 
@@ -249,12 +243,28 @@ input{
  <div class="card">
   <div class="hug">🤗💞🤗</div>
   <div class="foreverText">Forever Together 💖</div>
+  <button onclick="nextPage()">Always 💗</button>
+ </div>
+</div>
+
+<!-- FINAL LOVE PAGE -->
+<div class="page" id="finalLovePage">
+ <div class="card">
+  <h1>🌌 In Every Universe 🌌</h1>
+  <p>
+   If there are infinite universes…
+   I will still search for you in each one.
+   In every lifetime, every reality, every version of me —
+   I want a version of you.
+
+   I don't just love you for now.
+   I love you for every tomorrow that exists. 💗
+  </p>
  </div>
 </div>
 
 <script>
-
-let pages = ["passwordPage","introPage","counterPage","pausePage","page1","page2","page3","proposalPage","foreverPage"];
+let pages = ["passwordPage","introPage","counterPage","page1","page2","page3","proposalPage","foreverPage","finalLovePage"];
 let current = 0;
 
 /* PASSWORD */
@@ -276,72 +286,52 @@ function nextPage(){
    let page = document.getElementById(pages[current]);
    page.classList.add("active");
    startTyping(page);
-
-   if(pages[current]==="pausePage"){
-     runPauseScene();
-   }
-
-   if(pages[current]==="counterPage"){
-     startLoveTimer();
-   }
  }
 }
 
-/* LOVE TIMER */
-function startLoveTimer(){
- const startDate = new Date("January 1, 2025 22:00:00").getTime();
- function updateTimer(){
-   const now = new Date().getTime();
-   const diff = now - startDate;
-
-   const days = Math.floor(diff/(1000*60*60*24));
-   const hours = Math.floor((diff/(1000*60*60))%24);
-   const minutes = Math.floor((diff/(1000*60))%60);
-   const seconds = Math.floor((diff/1000)%60);
-
-   const el = document.getElementById("loveTimer");
-   if(el){
-     el.innerHTML = days+" days "+hours+" hrs "+minutes+" mins "+seconds+" secs 💖";
-   }
- }
- setInterval(updateTimer,1000);
- updateTimer();
-}
-
-/* TYPEWRITER */
+/* TYPEWRITER EFFECT */
 function startTyping(page){
  let elements = page.querySelectorAll("h1, p");
- elements.forEach(el=>{
+ elements.forEach(el => {
    if(el.dataset.done) return;
-   el.dataset.done=true;
-   let text=el.innerHTML.trim();
-   el.innerHTML="";
-   let i=0;
+   el.dataset.done = true;
+   let text = el.innerHTML.trim();
+   el.innerHTML = "";
+   let i = 0;
+   let speed = Math.max(15, 35 - text.length/30);
    function type(){
-     if(i<text.length){
-       el.innerHTML+=text.charAt(i);
+     if(i < text.length){
+       el.innerHTML += text.charAt(i);
        i++;
-       setTimeout(type,20);
+       setTimeout(type,speed);
      }
    }
    type();
  });
 }
 
-/* PAUSE SCENE */
-function runPauseScene(){
- const title=document.getElementById("pauseTitle");
- const text=document.getElementById("pauseText");
- const btn=document.getElementById("pauseBtn");
-
- setTimeout(()=>{title.innerText="this is how peaceful my life feels when you’re around";},5000);
- setTimeout(()=>{text.innerText="you make my chaos quiet.";text.style.opacity=1;},6500);
- setTimeout(()=>{btn.style.display="inline-block";btn.style.opacity=1;},8000);
+window.onload = function(){
+ startTyping(document.getElementById("passwordPage"));
 }
 
-/* RUNAWAY BUTTON */
-let noBtn=document.getElementById("noBtn");
-noBtn.addEventListener("mouseover",function(){
+/* TIME COUNTER */
+function updateCounter(){
+ let start = new Date("2025-01-01T22:00:00"); 
+ let now = new Date();
+ let diff = now - start;
+ let days = Math.floor(diff/(1000*60*60*24));
+ let hours = Math.floor((diff/(1000*60*60))%24);
+ let minutes = Math.floor((diff/(1000*60))%60);
+ let el = document.getElementById("timeTogether");
+ if(el){
+   el.innerHTML = days+" days "+hours+" hours "+minutes+" minutes together 💞";
+ }
+}
+setInterval(updateCounter,1000);
+
+/* RUNAWAY NO BUTTON */
+let noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", function(){
  noBtn.style.position="absolute";
  noBtn.style.top=Math.random()*80+"%";
  noBtn.style.left=Math.random()*80+"%";
@@ -351,7 +341,7 @@ noBtn.addEventListener("mouseover",function(){
 function acceptLove(){
  nextPage();
  for(let i=0;i<30;i++){
-   let heart=document.createElement("div");
+   let heart = document.createElement("div");
    heart.classList.add("heart");
    heart.innerHTML="💖";
    heart.style.left=Math.random()*100+"vw";
@@ -361,9 +351,9 @@ function acceptLove(){
  }
 }
 
-/* FLOATING HEARTS */
+/* CONTINUOUS FLOATING HEARTS */
 setInterval(()=>{
- let heart=document.createElement("div");
+ let heart = document.createElement("div");
  heart.classList.add("heart");
  heart.innerHTML="💗";
  heart.style.left=Math.random()*100+"vw";
@@ -371,7 +361,6 @@ setInterval(()=>{
  document.body.appendChild(heart);
  setTimeout(()=>{heart.remove();},6000);
 },600);
-
 </script>
 
 </body>
