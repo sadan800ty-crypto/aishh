@@ -2,299 +2,295 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For My Love 💗</title>
+<title>For You</title>
 
 <style>
-*{
- margin:0;
- padding:0;
- box-sizing:border-box;
- font-family:'Segoe UI', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI}
 
 body{
- background: radial-gradient(circle at top,#ffd6ec,#ffb3d9,#ff9fcb);
- overflow:hidden;
- color:#ff2e93;
- text-align:center;
- transition:2s;
+background:#0f0b14;
+color:#ffd6ec;
+overflow-x:hidden;
 }
 
-/* soft cinematic overlay */
-body::after{
- content:"";
- position:fixed;
- width:400px;
- height:400px;
- background:radial-gradient(circle,rgba(255,182,220,.4),transparent);
- filter:blur(100px);
- top:20%;
- left:60%;
- animation:floatGlow 8s infinite alternate ease-in-out;
- z-index:-1;
+/* sections */
+section{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px;
+position:relative;
 }
 
-@keyframes floatGlow{
- from{transform:translate(-50px,-30px);}
- to{transform:translate(50px,40px);}
+/* glow background */
+.glow{
+position:absolute;
+width:600px;
+height:600px;
+background:radial-gradient(circle,#ff8fcf55,transparent);
+filter:blur(120px);
+animation:move 12s infinite alternate ease-in-out;
+z-index:-1;
+}
+@keyframes move{
+from{transform:translate(-100px,-50px);}
+to{transform:translate(100px,80px);}
 }
 
-/* pages */
-.page{
- position:absolute;
- width:100%;
- height:100vh;
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:center;
- padding:40px;
- opacity:0;
- pointer-events:none;
- transition:1.5s;
-}
-
-.active{
- opacity:1;
- pointer-events:all;
-}
-
-/* card */
 .card{
- background:rgba(255,255,255,.6);
- backdrop-filter:blur(25px);
- padding:45px;
- border-radius:35px;
- max-width:750px;
- box-shadow:0 25px 60px rgba(255,105,180,.25);
- animation:float 5s infinite ease-in-out;
-}
-
-@keyframes float{
- 0%,100%{transform:translateY(0);}
- 50%{transform:translateY(-12px);}
+max-width:700px;
+line-height:1.8;
 }
 
 h1{
- font-size:38px;
- margin-bottom:20px;
+font-size:42px;
+margin-bottom:20px;
 }
 
 p{
- font-size:18px;
- line-height:1.8;
+font-size:20px;
+opacity:.9;
 }
 
-button{
- margin:15px;
- padding:12px 28px;
- border:none;
- border-radius:40px;
- background:#ff2e93;
- color:white;
- font-weight:bold;
- cursor:pointer;
- transition:.3s;
+/* starfield */
+.stars::before{
+content:"";
+position:absolute;
+inset:0;
+background:url("https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/star.png");
+animation:stars 60s linear infinite;
+opacity:.25;
+}
+@keyframes stars{
+from{background-position:0 0;}
+to{background-position:1000px 1000px;}
 }
 
-button:hover{
- transform:scale(1.1);
- background:#ff4da6;
-}
-
-input{
- padding:10px;
- border:none;
- border-radius:20px;
- background:#ffeaf5;
- text-align:center;
- font-weight:bold;
-}
-
-/* floating petals */
-.petal{
- position:absolute;
- font-size:18px;
- animation:fall 6s linear infinite;
-}
-
-@keyframes fall{
- 0%{transform:translateY(-10vh);}
- 100%{transform:translateY(110vh);}
-}
-
-/* hug animation */
-.hug{
- font-size:90px;
- animation:hug 1.5s infinite alternate;
-}
-
-@keyframes hug{
- from{transform:scale(1);}
- to{transform:scale(1.15);}
-}
-
-/* forever glow */
-.forever{
- font-size:55px;
- animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
- from{text-shadow:0 0 10px #ff4fa3;}
- to{text-shadow:0 0 35px #ff007f;}
-}
-
+/* counter */
 #counter{
- margin-top:20px;
- font-weight:bold;
- font-size:20px;
+font-size:26px;
+margin-top:25px;
+color:#ff9edc;
+}
+
+/* button */
+button{
+margin-top:30px;
+padding:14px 28px;
+border:none;
+border-radius:40px;
+background:#ff5ab5;
+color:white;
+font-size:18px;
+cursor:pointer;
+transition:.3s;
+}
+button:hover{transform:scale(1.1)}
+
+/* heartbeat */
+.heart{
+font-size:80px;
+animation:beat 1.2s infinite;
+}
+@keyframes beat{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.25)}
+}
+
+/* fade in */
+.fade{
+opacity:0;
+transform:translateY(40px);
+transition:1.5s;
+}
+.show{
+opacity:1;
+transform:none;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="bgmusic" loop>
-<source src="https://files.catbox.moe/6w8n8k.mp3" type="audio/mpeg">
-</audio>
-
-<!-- PASSWORD -->
-<div class="page active" id="passwordPage">
- <div class="card">
-  <h1>💌 Just For You</h1>
-  <p>Only you can open this.</p>
-  <input type="password" id="password" placeholder="Enter password">
-  <br>
-  <button onclick="checkPassword()">Open 💗</button>
- </div>
+<!-- 1 -->
+<section class="fade">
+<div class="glow"></div>
+<div class="card">
+<h1>hi</h1>
+<p>
+before anything…<br>
+just breathe for a second.<br><br>
+this is not a website.<br>
+this is something i wanted you to feel.
+</p>
 </div>
+</section>
 
-<!-- 8 BILLION -->
-<div class="page" id="introPage">
- <div class="card">
-  <h1>Out of 8 Billion…</h1>
-  <p>
-   Out of 8 billion people in this world… my heart chose you.
-   And if I had to choose again — I would still choose you.
-   Every single time.
-  </p>
-  <button onclick="nextPage()">Continue</button>
- </div>
+<!-- 2 -->
+<section class="fade">
+<div class="card">
+<h1>The First Time</h1>
+<p>
+there wasn’t a dramatic moment.<br>
+no movie scene.<br><br>
+just a random day…<br>
+and suddenly you mattered.
+</p>
 </div>
+</section>
 
-<!-- COUNTER -->
-<div class="page" id="counterPage">
- <div class="card">
-  <h1>Since The Night We Became Us</h1>
-  <div id="counter"></div>
-  <button onclick="nextPage()">Next</button>
- </div>
+<!-- 3 -->
+<section class="fade">
+<div class="card">
+<h1>Since Then</h1>
+<p>time stopped being normal.</p>
+<div id="counter"></div>
 </div>
+</section>
 
-<!-- LETTER -->
-<div class="page" id="letterPage">
- <div class="card">
-  <h1>To My Favorite Human</h1>
-  <p>
-   remember your last birthday my love? we were trying to win over each other.
-   a year later, look at us.
-   you made me feel things i never knew existed.
-   before you, i was just existing.
-   now, i feel alive.
-  </p>
-  <button onclick="nextPage()">Keep Reading</button>
- </div>
+<!-- 4 -->
+<section class="fade">
+<div class="card">
+<h1>You Changed Me</h1>
+<p>
+before you — i passed days.<br>
+after you — i lived them.<br><br>
+that’s the difference.
+</p>
 </div>
+</section>
 
-<!-- DISTANCE -->
-<div class="page" id="distancePage">
- <div class="card">
-  <h1>No Distance Can Break Us</h1>
-  <p>
-   there is distance right now…
-   but our love is stronger than ever.
-   if its you, i can wait a lifetime.
-   no matter the cities or time zones —
-   my heart always finds you.
-  </p>
-  <button onclick="nextPage()">One Last Thing</button>
- </div>
+<!-- 5 night -->
+<section class="fade stars">
+<div class="card">
+<h1>Distance</h1>
+<p>
+different places.<br>
+same person on my mind before sleep.<br><br>
+every night.
+</p>
 </div>
+</section>
 
-<!-- PROPOSAL -->
-<div class="page" id="proposalPage">
- <div class="card">
-  <h1>Will You Stay With Me Forever?</h1>
-  <button onclick="accept()">Yes 💖</button>
-  <button id="noBtn">No 😝</button>
- </div>
+<!-- 6 -->
+<section class="fade">
+<div class="card">
+<h1>Things I Don’t Say Enough</h1>
+<p>
+i feel calmer with you.<br>
+i laugh more.<br>
+i overthink less.<br><br>
+you feel like home.
+</p>
 </div>
+</section>
 
-<!-- FOREVER -->
-<div class="page" id="foreverPage">
- <div class="card">
-  <div class="hug">🤗💞🤗</div>
-  <div class="forever">Forever Together</div>
- </div>
+<!-- 7 sensory -->
+<section class="fade">
+<div class="card">
+<h1>You Feel Like</h1>
+<p>
+late night comfort calls<br>
+warm tea in rain<br>
+soft songs at 2am<br>
+and safe silence
+</p>
 </div>
+</section>
+
+<!-- 8 hold -->
+<section class="fade">
+<div class="card">
+<h1>Stay Here</h1>
+<p>press and hold</p>
+<button onmousedown="holdStart()" onmouseup="holdEnd()" ontouchstart="holdStart()" ontouchend="holdEnd()">hold me</button>
+<p id="holdText"></p>
+</div>
+</section>
+
+<!-- 9 proposal -->
+<section class="fade">
+<div class="card">
+<h1>so…</h1>
+<p>choose me, again?</p>
+<button onclick="yes()">yes</button>
+<button id="no">no</button>
+</div>
+</section>
+
+<!-- 10 ending -->
+<section class="fade">
+<div class="card">
+<div class="heart">💗</div>
+<h1>in every universe</h1>
+<p>
+i would still end up finding you.
+</p>
+</div>
+</section>
 
 <script>
-let pages=["passwordPage","introPage","counterPage","letterPage","distancePage","proposalPage","foreverPage"];
-let current=0;
 
-/* password */
-function checkPassword(){
- if(document.getElementById("password").value==="aishh"){
-  document.getElementById("bgmusic").play();
-  nextPage();
- }else alert("Wrong password 😝");
-}
+/* scroll reveal */
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(e=>{
+if(e.isIntersecting)e.target.classList.add("show");
+});
+},{threshold:.3});
 
-/* page change */
-function nextPage(){
- document.getElementById(pages[current]).classList.remove("active");
- current++;
- if(current<pages.length){
-  document.getElementById(pages[current]).classList.add("active");
- }
-}
+document.querySelectorAll(".fade").forEach(el=>observer.observe(el));
 
 /* counter */
-function updateCounter(){
- let start=new Date("2025-01-01T22:00:00");
- let now=new Date();
- let diff=now-start;
- let days=Math.floor(diff/(1000*60*60*24));
- let hours=Math.floor((diff/(1000*60*60))%24);
- let minutes=Math.floor((diff/(1000*60))%60);
- document.getElementById("counter").innerHTML=
- days+" days "+hours+" hours "+minutes+" minutes 💞";
+function update(){
+let start=new Date("2025-01-01T22:00:00");
+let now=new Date();
+let diff=now-start;
+let d=Math.floor(diff/86400000);
+let h=Math.floor(diff/3600000)%24;
+let m=Math.floor(diff/60000)%60;
+document.getElementById("counter").innerHTML=d+" days "+h+" hrs "+m+" mins together";
 }
-setInterval(updateCounter,1000);
+setInterval(update,1000);
 
-/* runaway button */
-let noBtn=document.getElementById("noBtn");
-if(noBtn){
- noBtn.addEventListener("mouseover",()=>{
-  noBtn.style.position="absolute";
-  noBtn.style.top=Math.random()*80+"%";
-  noBtn.style.left=Math.random()*80+"%";
- });
+/* runaway no */
+const no=document.getElementById("no");
+if(no){
+no.onmouseover=()=>{
+no.style.position="absolute";
+no.style.left=Math.random()*80+"%";
+no.style.top=Math.random()*80+"%";
+};
 }
 
-/* accept */
-function accept(){
- nextPage();
- for(let i=0;i<40;i++){
-  let p=document.createElement("div");
-  p.className="petal";
-  p.innerHTML=["💗","🌸","💕"][Math.floor(Math.random()*3)];
-  p.style.left=Math.random()*100+"vw";
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(),6000);
- }
+/* hold interaction */
+let timer;
+function holdStart(){
+timer=setTimeout(()=>document.getElementById("holdText").innerHTML="i'm not going anywhere.",1200);
 }
+function holdEnd(){clearTimeout(timer);}
+
+/* yes petals */
+function yes(){
+for(let i=0;i<50;i++){
+let p=document.createElement("div");
+p.innerHTML=["💗","🌸","💕"][Math.floor(Math.random()*3)];
+p.style.position="fixed";
+p.style.left=Math.random()*100+"vw";
+p.style.top="-10vh";
+p.style.fontSize="20px";
+p.style.animation="fall 6s linear";
+document.body.appendChild(p);
+setTimeout(()=>p.remove(),6000);
+}
+}
+
+/* falling animation */
+const style=document.createElement('style');
+style.innerHTML=`@keyframes fall{to{transform:translateY(110vh)}}`;
+document.head.appendChild(style);
+
 </script>
 
 </body>
