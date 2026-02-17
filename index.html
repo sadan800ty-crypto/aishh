@@ -133,12 +133,9 @@ input{
  to{transform:scale(1.2);}
 }
 
-/* Counter Style */
-#timeTogether{
- font-size:22px;
- margin-top:15px;
- color:#ff007f;
- font-weight:bold;
+/* NEW — calm pause fade */
+#pauseTitle,#pauseText,#pauseBtn{
+ transition:opacity 1.5s ease;
 }
 </style>
 </head>
@@ -173,13 +170,12 @@ input{
  </div>
 </div>
 
-<!-- TIME COUNTER PAGE -->
-<div class="page" id="counterPage">
+<!-- NEW PAUSE PAGE (after your counter page in story flow) -->
+<div class="page" id="pausePage">
  <div class="card">
-  <h1>⏳ Our Time Together ⏳</h1>
-  <p>Since the moment we met… my life started counting differently.</p>
-  <div id="timeTogether"></div>
-  <button onclick="nextPage()">Next 💗</button>
+  <h1 id="pauseTitle">stay here for 5 seconds…</h1>
+  <p id="pauseText"></p>
+  <button id="pauseBtn" onclick="nextPage()" style="display:none;">continue 💞</button>
  </div>
 </div>
 
@@ -243,28 +239,12 @@ input{
  <div class="card">
   <div class="hug">🤗💞🤗</div>
   <div class="foreverText">Forever Together 💖</div>
-  <button onclick="nextPage()">Always 💗</button>
- </div>
-</div>
-
-<!-- FINAL LOVE PAGE -->
-<div class="page" id="finalLovePage">
- <div class="card">
-  <h1>🌌 In Every Universe 🌌</h1>
-  <p>
-   If there are infinite universes…
-   I will still search for you in each one.
-   In every lifetime, every reality, every version of me —
-   I want a version of you.
-
-   I don't just love you for now.
-   I love you for every tomorrow that exists. 💗
-  </p>
  </div>
 </div>
 
 <script>
-let pages = ["passwordPage","introPage","counterPage","page1","page2","page3","proposalPage","foreverPage","finalLovePage"];
+
+let pages = ["passwordPage","introPage","pausePage","page1","page2","page3","proposalPage","foreverPage"];
 let current = 0;
 
 /* PASSWORD */
@@ -286,52 +266,47 @@ function nextPage(){
    let page = document.getElementById(pages[current]);
    page.classList.add("active");
    startTyping(page);
+
+   if(pages[current]==="pausePage"){
+     runPauseScene();
+   }
  }
 }
 
-/* TYPEWRITER EFFECT */
+/* TYPEWRITER */
 function startTyping(page){
  let elements = page.querySelectorAll("h1, p");
- elements.forEach(el => {
+ elements.forEach(el=>{
    if(el.dataset.done) return;
-   el.dataset.done = true;
-   let text = el.innerHTML.trim();
-   el.innerHTML = "";
-   let i = 0;
-   let speed = Math.max(15, 35 - text.length/30);
+   el.dataset.done=true;
+   let text=el.innerHTML.trim();
+   el.innerHTML="";
+   let i=0;
    function type(){
-     if(i < text.length){
-       el.innerHTML += text.charAt(i);
+     if(i<text.length){
+       el.innerHTML+=text.charAt(i);
        i++;
-       setTimeout(type,speed);
+       setTimeout(type,20);
      }
    }
    type();
  });
 }
 
-window.onload = function(){
- startTyping(document.getElementById("passwordPage"));
+/* PAUSE SCENE */
+function runPauseScene(){
+ const title=document.getElementById("pauseTitle");
+ const text=document.getElementById("pauseText");
+ const btn=document.getElementById("pauseBtn");
+
+ setTimeout(()=>{title.innerText="this is how peaceful my life feels when you’re around";},5000);
+ setTimeout(()=>{text.innerText="you make my chaos quiet.";text.style.opacity=1;},6500);
+ setTimeout(()=>{btn.style.display="inline-block";btn.style.opacity=1;},8000);
 }
 
-/* TIME COUNTER */
-function updateCounter(){
- let start = new Date("2025-01-01T22:00:00"); 
- let now = new Date();
- let diff = now - start;
- let days = Math.floor(diff/(1000*60*60*24));
- let hours = Math.floor((diff/(1000*60*60))%24);
- let minutes = Math.floor((diff/(1000*60))%60);
- let el = document.getElementById("timeTogether");
- if(el){
-   el.innerHTML = days+" days "+hours+" hours "+minutes+" minutes together 💞";
- }
-}
-setInterval(updateCounter,1000);
-
-/* RUNAWAY NO BUTTON */
-let noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("mouseover", function(){
+/* RUNAWAY BUTTON */
+let noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",function(){
  noBtn.style.position="absolute";
  noBtn.style.top=Math.random()*80+"%";
  noBtn.style.left=Math.random()*80+"%";
@@ -341,7 +316,7 @@ noBtn.addEventListener("mouseover", function(){
 function acceptLove(){
  nextPage();
  for(let i=0;i<30;i++){
-   let heart = document.createElement("div");
+   let heart=document.createElement("div");
    heart.classList.add("heart");
    heart.innerHTML="💖";
    heart.style.left=Math.random()*100+"vw";
@@ -351,9 +326,9 @@ function acceptLove(){
  }
 }
 
-/* CONTINUOUS FLOATING HEARTS */
+/* FLOATING HEARTS */
 setInterval(()=>{
- let heart = document.createElement("div");
+ let heart=document.createElement("div");
  heart.classList.add("heart");
  heart.innerHTML="💗";
  heart.style.left=Math.random()*100+"vw";
@@ -361,6 +336,7 @@ setInterval(()=>{
  document.body.appendChild(heart);
  setTimeout(()=>{heart.remove();},6000);
 },600);
+
 </script>
 
 </body>
