@@ -13,14 +13,33 @@
 }
 
 body{
- background: linear-gradient(135deg,#ffd1e6,#ffb3d9,#ffc2e2);
+ background: radial-gradient(circle at top,#ffd6ec,#ffb3d9,#ff9fcb);
  overflow:hidden;
- color:#fff;
+ color:#ff2e93;
  text-align:center;
- transition:1.5s;
+ transition:2s;
 }
 
-/* Pages */
+/* soft cinematic overlay */
+body::after{
+ content:"";
+ position:fixed;
+ width:400px;
+ height:400px;
+ background:radial-gradient(circle,rgba(255,182,220,.4),transparent);
+ filter:blur(100px);
+ top:20%;
+ left:60%;
+ animation:floatGlow 8s infinite alternate ease-in-out;
+ z-index:-1;
+}
+
+@keyframes floatGlow{
+ from{transform:translate(-50px,-30px);}
+ to{transform:translate(50px,40px);}
+}
+
+/* pages */
 .page{
  position:absolute;
  width:100%;
@@ -29,10 +48,10 @@ body{
  flex-direction:column;
  justify-content:center;
  align-items:center;
- transition:1s;
+ padding:40px;
  opacity:0;
  pointer-events:none;
- padding:40px;
+ transition:1.5s;
 }
 
 .active{
@@ -40,148 +59,96 @@ body{
  pointer-events:all;
 }
 
-/* Card */
+/* card */
 .card{
- background:rgba(255,255,255,0.35);
- backdrop-filter:blur(18px);
- padding:40px;
- border-radius:30px;
- box-shadow:0 20px 50px rgba(255,105,180,0.25);
- animation:float 4s ease-in-out infinite;
- max-width:800px;
- color:#ff2e93;
-
- /* paper texture */
- background:
- linear-gradient(rgba(255,255,255,0.55),rgba(255,255,255,0.55)),
- repeating-linear-gradient(
-  0deg,
-  #fff0f6,
-  #fff0f6 28px,
-  #ffd9ea 29px
- );
+ background:rgba(255,255,255,.6);
+ backdrop-filter:blur(25px);
+ padding:45px;
+ border-radius:35px;
+ max-width:750px;
+ box-shadow:0 25px 60px rgba(255,105,180,.25);
+ animation:float 5s infinite ease-in-out;
 }
 
 @keyframes float{
- 0%,100%{transform:translateY(0px);}
- 50%{transform:translateY(-15px);}
+ 0%,100%{transform:translateY(0);}
+ 50%{transform:translateY(-12px);}
 }
 
 h1{
- font-size:40px;
+ font-size:38px;
  margin-bottom:20px;
- color:#ff2e93;
 }
 
 p{
  font-size:18px;
  line-height:1.8;
- color:#c21870;
 }
 
 button{
  margin:15px;
- padding:12px 25px;
+ padding:12px 28px;
  border:none;
- border-radius:30px;
+ border-radius:40px;
  background:#ff2e93;
  color:white;
  font-weight:bold;
  cursor:pointer;
- transition:0.3s;
- position:relative;
- animation:shy 3s infinite ease-in-out;
+ transition:.3s;
 }
 
 button:hover{
  transform:scale(1.1);
- background:#ff5cad;
-}
-
-@keyframes shy{
- 0%,100%{transform:translateY(0);}
- 50%{transform:translateY(-4px);}
+ background:#ff4da6;
 }
 
 input{
  padding:10px;
  border:none;
  border-radius:20px;
- margin-top:15px;
+ background:#ffeaf5;
  text-align:center;
- background:#fff0f7;
- color:#ff2e93;
  font-weight:bold;
 }
 
-/* Floating Hearts */
-.heart{
+/* floating petals */
+.petal{
  position:absolute;
- color:#ff2e93;
- font-size:20px;
- animation:floatHearts 6s linear infinite;
+ font-size:18px;
+ animation:fall 6s linear infinite;
 }
 
-@keyframes floatHearts{
- 0%{transform:translateY(100vh); opacity:1;}
- 100%{transform:translateY(-10vh); opacity:0;}
+@keyframes fall{
+ 0%{transform:translateY(-10vh);}
+ 100%{transform:translateY(110vh);}
 }
 
-/* Forever */
-.foreverText{
- font-size:60px;
- color:#ff007f;
- animation:glow 1.5s infinite alternate;
+/* hug animation */
+.hug{
+ font-size:90px;
+ animation:hug 1.5s infinite alternate;
+}
+
+@keyframes hug{
+ from{transform:scale(1);}
+ to{transform:scale(1.15);}
+}
+
+/* forever glow */
+.forever{
+ font-size:55px;
+ animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
  from{text-shadow:0 0 10px #ff4fa3;}
- to{text-shadow:0 0 30px #ff007f;}
+ to{text-shadow:0 0 35px #ff007f;}
 }
 
-.hug{
- font-size:80px;
- animation:hugmove 1s infinite alternate;
-}
-
-@keyframes hugmove{
- from{transform:scale(1);}
- to{transform:scale(1.2);}
-}
-
-/* Counter */
-#timeTogether{
- font-size:22px;
- margin-top:15px;
- color:#ff007f;
+#counter{
+ margin-top:20px;
  font-weight:bold;
-}
-
-/* Sparkles */
-.sparkle{
- position:absolute;
- font-size:14px;
- pointer-events:none;
- animation:sparkleFloat 5s linear forwards;
- opacity:.8;
-}
-
-@keyframes sparkleFloat{
- 0%{transform:translateY(0) scale(.6); opacity:0;}
- 10%{opacity:1;}
- 100%{transform:translateY(-120px) scale(1.2); opacity:0;}
-}
-
-/* Cursor Hearts */
-.cursorHeart{
- position:fixed;
- font-size:14px;
- pointer-events:none;
- animation:trail 1s linear forwards;
-}
-
-@keyframes trail{
- to{transform:translateY(-25px);opacity:0;}
+ font-size:20px;
 }
 </style>
 </head>
@@ -192,259 +159,142 @@ input{
 <source src="https://files.catbox.moe/6w8n8k.mp3" type="audio/mpeg">
 </audio>
 
-<audio id="typeSound">
-<source src="https://files.catbox.moe/8m6x6p.mp3" type="audio/mpeg">
-</audio>
-
-<!-- PASSWORD PAGE -->
+<!-- PASSWORD -->
 <div class="page active" id="passwordPage">
  <div class="card">
-  <h1>💌 Secret Entry 💌</h1>
-  <p>Only my baby can enter 💗</p>
-  <input type="password" id="password" placeholder="Enter Password">
+  <h1>💌 Just For You</h1>
+  <p>Only you can open this.</p>
+  <input type="password" id="password" placeholder="Enter password">
   <br>
-  <button onclick="checkPassword()">Unlock My Heart 💞</button>
+  <button onclick="checkPassword()">Open 💗</button>
  </div>
 </div>
 
-<!-- INTRO PAGE -->
+<!-- 8 BILLION -->
 <div class="page" id="introPage">
  <div class="card">
-  <h1>Out of 8 Billion People… 💖</h1>
+  <h1>Out of 8 Billion…</h1>
   <p>
    Out of 8 billion people in this world… my heart chose you.
    And if I had to choose again — I would still choose you.
    Every single time.
   </p>
-  <button onclick="nextPage()">Continue 💕</button>
+  <button onclick="nextPage()">Continue</button>
  </div>
 </div>
 
-<!-- TIME COUNTER PAGE -->
+<!-- COUNTER -->
 <div class="page" id="counterPage">
  <div class="card">
-  <h1>⏳ Our Time Together ⏳</h1>
-  <p>Since the moment we met… my life started counting differently.</p>
-  <div id="timeTogether"></div>
-  <button onclick="nextPage()">Next 💗</button>
+  <h1>Since The Night We Became Us</h1>
+  <div id="counter"></div>
+  <button onclick="nextPage()">Next</button>
  </div>
 </div>
 
-<!-- MEMORY PAGE -->
-<div class="page" id="page1">
+<!-- LETTER -->
+<div class="page" id="letterPage">
  <div class="card">
-  <h1>🎀 That Special Birthday 🎀</h1>
+  <h1>To My Favorite Human</h1>
   <p>
    remember your last birthday my love? we were trying to win over each other.
-   i still have those chats, and i can proudly say a year later we are on the right track
-   to fulfill what we promised to each other.
-   people say birthday is your day but how do i tell them i celebrate you everyday.
-   you made me experience what life is..yes i was just existing before,
-   more of a emotionless creature but now every time we talk, its my emotion that speaks for me.
+   a year later, look at us.
+   you made me feel things i never knew existed.
+   before you, i was just existing.
+   now, i feel alive.
   </p>
-  <button onclick="nextPage()">Next 💗</button>
+  <button onclick="nextPage()">Keep Reading</button>
  </div>
 </div>
 
-<!-- GROWTH PAGE -->
-<div class="page" id="page2">
+<!-- DISTANCE -->
+<div class="page" id="distancePage">
  <div class="card">
-  <h1>🌸 One Year Later 🌸</h1>
+  <h1>No Distance Can Break Us</h1>
   <p>
-   what changed in a year? you became more confident,mature,independent..
-   but what didnt changed? the love we had.
-   it only grew multifolds.
-   i lovveee youuu soo mucchh meraaa bachhaaa and i promise this isnt just for this lifetime.
-   i wish to have you every time im born.
+   there is distance right now…
+   but our love is stronger than ever.
+   if its you, i can wait a lifetime.
+   no matter the cities or time zones —
+   my heart always finds you.
   </p>
-  <button onclick="nextPage()">Next 💞</button>
+  <button onclick="nextPage()">One Last Thing</button>
  </div>
 </div>
 
-<!-- DISTANCE PAGE -->
-<div class="page" id="page3">
- <div class="card">
-  <h1>💞 No Distance Can Break Us 💞</h1>
-  <p>
-   there is a distance between us right now but our love is stronger than ever
-   and we will be meeting very soonn.
-   if its you i can wait lifetime cutuuu 💗
-   No matter the cities, no matter the time zones,
-   my heart always finds its way back to you.
-  </p>
-  <button onclick="nextPage()">One Last Thing 💍</button>
- </div>
-</div>
-
-<!-- PROPOSAL PAGE -->
+<!-- PROPOSAL -->
 <div class="page" id="proposalPage">
  <div class="card">
-  <h1>Will You Stay With Me Forever? 💍</h1>
-  <button onclick="acceptLove()">Yes 💖</button>
+  <h1>Will You Stay With Me Forever?</h1>
+  <button onclick="accept()">Yes 💖</button>
   <button id="noBtn">No 😝</button>
  </div>
 </div>
 
-<!-- FOREVER PAGE -->
+<!-- FOREVER -->
 <div class="page" id="foreverPage">
  <div class="card">
   <div class="hug">🤗💞🤗</div>
-  <div class="foreverText">Forever Together 💖</div>
-  <button onclick="nextPage()">Always 💗</button>
- </div>
-</div>
-
-<!-- FINAL PAGE -->
-<div class="page" id="finalLovePage">
- <div class="card">
-  <h1>🌌 In Every Universe 🌌</h1>
-  <p>
-   If there are infinite universes…
-   I will still search for you in each one.
-   In every lifetime, every reality, every version of me —
-   I want a version of you.
-
-   I don't just love you for now.
-   I love you for every tomorrow that exists. 💗
-  </p>
+  <div class="forever">Forever Together</div>
  </div>
 </div>
 
 <script>
-let pages = ["passwordPage","introPage","counterPage","page1","page2","page3","proposalPage","foreverPage","finalLovePage"];
-let current = 0;
+let pages=["passwordPage","introPage","counterPage","letterPage","distancePage","proposalPage","foreverPage"];
+let current=0;
 
-/* PASSWORD */
+/* password */
 function checkPassword(){
- let pass = document.getElementById("password").value;
- if(pass === "aishh"){
-   document.getElementById("bgmusic").play();
-   nextPage();
- }else{
-   alert("Wrong password baby 😝");
- }
+ if(document.getElementById("password").value==="aishh"){
+  document.getElementById("bgmusic").play();
+  nextPage();
+ }else alert("Wrong password 😝");
 }
 
-/* PAGE CHANGE */
+/* page change */
 function nextPage(){
  document.getElementById(pages[current]).classList.remove("active");
  current++;
- if(current < pages.length){
-   let page = document.getElementById(pages[current]);
-   page.classList.add("active");
-   startTyping(page);
+ if(current<pages.length){
+  document.getElementById(pages[current]).classList.add("active");
  }
 }
 
-/* TYPEWRITER */
-function startTyping(page){
- let elements = page.querySelectorAll("h1, p");
- elements.forEach(el=>{
-   if(el.dataset.done) return;
-   el.dataset.done = true;
-   let text = el.innerHTML.trim();
-   el.innerHTML = "";
-   let i = 0;
-   let speed = Math.max(15, 35 - text.length/30);
-   function type(){
-     if(i < text.length){
-       el.innerHTML += text.charAt(i);
-       let s=document.getElementById("typeSound");
-       if(s){ s.currentTime=0; s.play(); }
-       i++;
-       setTimeout(type,speed);
-     }
-   }
-   type();
- });
-}
-
-window.onload=function(){
- startTyping(document.getElementById("passwordPage"));
-};
-
-/* TIME COUNTER */
+/* counter */
 function updateCounter(){
- let start = new Date("2025-01-01T22:00:00");
- let now = new Date();
- let diff = now - start;
- let days = Math.floor(diff/(1000*60*60*24));
- let hours = Math.floor((diff/(1000*60*60))%24);
- let minutes = Math.floor((diff/(1000*60))%60);
- let el = document.getElementById("timeTogether");
- if(el){
-   el.innerHTML = days+" days "+hours+" hours "+minutes+" minutes together 💞";
- }
+ let start=new Date("2025-01-01T22:00:00");
+ let now=new Date();
+ let diff=now-start;
+ let days=Math.floor(diff/(1000*60*60*24));
+ let hours=Math.floor((diff/(1000*60*60))%24);
+ let minutes=Math.floor((diff/(1000*60))%60);
+ document.getElementById("counter").innerHTML=
+ days+" days "+hours+" hours "+minutes+" minutes 💞";
 }
 setInterval(updateCounter,1000);
 
-/* RUNAWAY BUTTON */
+/* runaway button */
 let noBtn=document.getElementById("noBtn");
 if(noBtn){
- noBtn.addEventListener("mouseover",function(){
+ noBtn.addEventListener("mouseover",()=>{
   noBtn.style.position="absolute";
   noBtn.style.top=Math.random()*80+"%";
   noBtn.style.left=Math.random()*80+"%";
  });
 }
 
-/* ACCEPT LOVE */
-function acceptLove(){
- document.body.style.background="linear-gradient(135deg,#ffd6ec,#ffc1e3,#ffb3d9)";
+/* accept */
+function accept(){
  nextPage();
- for(let i=0;i<30;i++){
-   let heart=document.createElement("div");
-   heart.classList.add("heart");
-   heart.innerHTML="💖";
-   heart.style.left=Math.random()*100+"vw";
-   heart.style.fontSize=(Math.random()*30+20)+"px";
-   document.body.appendChild(heart);
-   setTimeout(()=>heart.remove(),4000);
+ for(let i=0;i<40;i++){
+  let p=document.createElement("div");
+  p.className="petal";
+  p.innerHTML=["💗","🌸","💕"][Math.floor(Math.random()*3)];
+  p.style.left=Math.random()*100+"vw";
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),6000);
  }
 }
-
-/* FLOATING HEARTS */
-setInterval(()=>{
- let heart=document.createElement("div");
- heart.classList.add("heart");
- heart.innerHTML="💗";
- heart.style.left=Math.random()*100+"vw";
- heart.style.fontSize=(Math.random()*20+15)+"px";
- document.body.appendChild(heart);
- setTimeout(()=>heart.remove(),6000);
-},600);
-
-/* SPARKLES */
-setInterval(()=>{
- let s=document.createElement("div");
- s.className="sparkle";
- s.innerHTML=["✨","💗","🌸","🫧","💞"][Math.floor(Math.random()*5)];
- s.style.left=Math.random()*100+"vw";
- s.style.bottom="0px";
- document.body.appendChild(s);
- setTimeout(()=>s.remove(),5000);
-},900);
-
-/* CURSOR HEART TRAIL */
-document.addEventListener("mousemove",e=>{
- let h=document.createElement("div");
- h.className="cursorHeart";
- h.innerHTML=["💗","💞","💕"][Math.floor(Math.random()*3)];
- h.style.left=e.clientX+"px";
- h.style.top=e.clientY+"px";
- document.body.appendChild(h);
- setTimeout(()=>h.remove(),1000);
-});
-
-/* DREAMY BREATHING EFFECT */
-let pink=true;
-setInterval(()=>{
- if(current>2){
-   document.body.style.filter=pink?"brightness(.95) saturate(1.1)":"brightness(1)";
-   pink=!pink;
- }
-},6000);
-
 </script>
 
 </body>
