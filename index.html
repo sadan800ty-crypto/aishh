@@ -1,290 +1,278 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>For My Love 💗</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI', sans-serif;
-}
-
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif;}
 body{
-background: linear-gradient(135deg,#ffd1e6,#ffb3d9,#ffc2e2);
-overflow:hidden;
-color:#fff;
-text-align:center;
+    background:linear-gradient(135deg,#ffd1e8,#ffc0dd,#ffb3d8);
+    height:100vh;
+    overflow:hidden;
+    color:#fff;
 }
 
-/* Pages */
+/* pages */
 .page{
-position:absolute;
-width:100%;
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-transition:1s;
-opacity:0;
-pointer-events:none;
-padding:40px;
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:40px;
+    backdrop-filter: blur(8px);
 }
 
-.active{
-opacity:1;
-pointer-events:all;
-}
+.active{display:flex}
 
-/* Card */
+/* glass card */
 .card{
-background:rgba(255,255,255,0.35);
-backdrop-filter:blur(18px);
-padding:40px;
-border-radius:30px;
-box-shadow:0 20px 50px rgba(255,105,180,0.25);
-animation:float 4s ease-in-out infinite;
-max-width:800px;
-color:#ff2e93;
+    background:rgba(255,255,255,0.12);
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+    max-width:800px;
+    transform:perspective(1000px) rotateX(6deg);
 }
 
-@keyframes float{
-0%,100%{transform:translateY(0px);}
-50%{transform:translateY(-15px);}
-}
-
+/* headings */
 h1{
-font-size:40px;
-margin-bottom:20px;
-color:#ff2e93;
+    font-size:48px;
+    margin-bottom:25px;
+    text-shadow:0 0 15px #ff4fa3;
 }
 
-p{
-font-size:18px;
-line-height:1.8;
-color:#c21870;
+/* typing text */
+.typing{
+    font-size:22px;
+    line-height:1.7;
+    min-height:200px;
+    white-space:pre-wrap;
 }
 
+/* buttons */
 button{
-margin:15px;
-padding:12px 25px;
-border:none;
-border-radius:30px;
-background:#ff2e93;
-color:white;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
-position:relative;
+    margin-top:30px;
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    cursor:pointer;
+    background:#ff4fa3;
+    color:white;
+    transition:.3s;
 }
+button:hover{transform:scale(1.1);}
 
-button:hover{
-transform:scale(1.1);
-background:#ff5cad;
-}
-
+/* password */
 input{
-padding:10px;
-border:none;
-border-radius:20px;
-margin-top:15px;
-text-align:center;
-background:#fff0f7;
-color:#ff2e93;
-font-weight:bold;
+    padding:12px;
+    border-radius:20px;
+    border:none;
+    text-align:center;
+    font-size:18px;
 }
 
-/* Floating Hearts */
+/* floating hearts */
 .heart{
-position:absolute;
-color:#ff2e93;
-font-size:20px;
-animation:floatHearts 6s linear infinite;
+    position:fixed;
+    bottom:-40px;
+    font-size:22px;
+    animation:floatUp linear forwards;
+    opacity:.7;
+}
+@keyframes floatUp{
+    to{transform:translateY(-110vh) rotate(360deg);opacity:0}
 }
 
-@keyframes floatHearts{
-0%{transform:translateY(100vh); opacity:1;}
-100%{transform:translateY(-10vh); opacity:0;}
+/* proposal buttons */
+#noBtn{position:absolute}
+#yesBtn{background:#ff2a8a}
+
+/* hug scene */
+.hug img{
+    width:120px;
+    border-radius:50%;
+    margin:0 20px;
+    animation:hug 2s infinite alternate ease-in-out;
+}
+@keyframes hug{
+    from{transform:translateX(-20px)}
+    to{transform:translateX(20px)}
 }
 
-/* Proposal Celebration */
-.foreverText{
-font-size:60px;
-color:#ff007f;
-animation:glow 1.5s infinite alternate;
+.forever{
+    font-size:60px;
+    margin-top:30px;
+    text-shadow:0 0 20px #fff,0 0 40px #ff4fa3;
 }
-
-@keyframes glow{
-from{text-shadow:0 0 10px #ff4fa3;}
-to{text-shadow:0 0 30px #ff007f;}
-}
-
-/* Hug Animation */
-.hug{
-font-size:80px;
-animation:hugmove 1s infinite alternate;
-}
-
-@keyframes hugmove{
-from{transform:scale(1);}
-to{transform:scale(1.2);}
-}
-
 </style>
 </head>
-
 <body>
 
-<audio id="bgmusic" loop>
-<source src="https://files.catbox.moe/6w8n8k.mp3" type="audio/mpeg">
-</audio>
-
-<!-- PASSWORD PAGE -->
-<div class="page active" id="passwordPage">
+<!-- PASSWORD -->
+<div class="page active" id="lock">
 <div class="card">
-<h1>💌 Secret Entry 💌</h1>
-<p>Only my baby can enter 💗</p>
-<input type="password" id="password" placeholder="Enter Password">
+<h1>💗 Just You & Me</h1>
+<input id="pass" placeholder="enter password">
 <br>
-<button onclick="checkPassword()">Unlock My Heart 💞</button>
+<button onclick="unlock()">open</button>
+<p id="err"></p>
 </div>
 </div>
 
-<!-- INTRO PAGE -->
-<div class="page" id="introPage">
+<!-- BILLION PEOPLE -->
+<div class="page" id="p1">
 <div class="card">
-<h1>Out of 8 Billion People… 💖</h1>
-<p>
-Out of 8 billion people in this world…  
-my heart chose you.  
-And if I had to choose again —  
-I would still choose you. Every single time.
-</p>
-<button onclick="nextPage()">Continue 💕</button>
+<h1>Out of 8 Billion...</h1>
+<div class="typing" id="t1"></div>
+<button onclick="next()">continue 💞</button>
 </div>
 </div>
 
 <!-- MEMORY PAGE -->
-<div class="page" id="page1">
+<div class="page" id="p2">
 <div class="card">
-<h1>🎀 That Special Birthday 🎀</h1>
-<p>
-remember your last birthday my love? we were trying to win over each other. 
-i still have those chats, and i can proudly say a year later we are on the right track to fulfill what we promised to each other. 
-people say birthday is your day but how do i tell them i celebrate you everyday. 
-you made me experience what life is..yes i was just existing before,more of a emotionless creature but now every time we talk, its my emotion that speaks for me.
-</p>
-<button onclick="nextPage()">Next 💗</button>
+<h1>My Favourite Memory</h1>
+<div class="typing" id="t2"></div>
+<button onclick="next()">next 💗</button>
 </div>
 </div>
 
 <!-- GROWTH PAGE -->
-<div class="page" id="page2">
+<div class="page" id="p3">
 <div class="card">
-<h1>🌸 One Year Later 🌸</h1>
-<p>
-what changed in a year? you became more confident,mature,independent.. 
-but what didnt changed? the love we had. it only grew multifolds. 
-i lovveee youuu soo mucchh meraaa bachhaaa and i promise this isnt just for this lifetime. 
-i wish to have you every time im born.
-</p>
-<button onclick="nextPage()">Next 💞</button>
+<h1>You Changed Me</h1>
+<div class="typing" id="t3"></div>
+<button onclick="next()">always you 💖</button>
 </div>
 </div>
 
 <!-- DISTANCE PAGE -->
-<div class="page" id="page3">
+<div class="page" id="p4">
 <div class="card">
-<h1>💞 No Distance Can Break Us 💞</h1>
-<p>
-there is a distance between us right now but our love is stronger than ever 
-and we will be meeting very soonn. if its you i can wait lifetime cutuuu 💗  
-No matter the cities, no matter the time zones,  
-my heart always finds its way back to you.
-</p>
-<button onclick="nextPage()">One Last Thing 💍</button>
+<h1>No Matter The Distance</h1>
+<div class="typing" id="t4"></div>
+<button onclick="proposal()">something important...</button>
 </div>
 </div>
 
-<!-- PROPOSAL PAGE -->
-<div class="page" id="proposalPage">
+<!-- PROPOSAL -->
+<div class="page" id="proposal">
 <div class="card">
-<h1>Will You Stay With Me Forever? 💍</h1>
-<button onclick="acceptLove()">Yes 💖</button>
-<button id="noBtn">No 😝</button>
+<h1>Will you stay with me forever?</h1>
+<button id="yesBtn" onclick="accept()">YES 💍</button>
+<button id="noBtn">NO</button>
 </div>
 </div>
 
-<!-- FOREVER PAGE -->
-<div class="page" id="foreverPage">
+<!-- HUG END -->
+<div class="page" id="end">
 <div class="card">
-<div class="hug">🤗💞🤗</div>
-<div class="foreverText">Forever Together 💖</div>
+<div class="hug">
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+</div>
+<div class="forever">Forever Together 💞</div>
 </div>
 </div>
 
 <script>
 
-let pages = ["passwordPage","introPage","page1","page2","page3","proposalPage","foreverPage"];
-let current = 0;
-
-function checkPassword(){
-let pass = document.getElementById("password").value;
-if(pass === "aishh"){
-document.getElementById("bgmusic").play();
-nextPage();
-}else{
-alert("Wrong password baby 😝");
-}
+/* PASSWORD */
+function unlock(){
+ if(document.getElementById("pass").value==="aishh"){
+    show("p1");
+    typeText(texts[0],"t1");
+ }else document.getElementById("err").innerText="wrong password :(";
 }
 
-function nextPage(){
-document.getElementById(pages[current]).classList.remove("active");
-current++;
-if(current < pages.length){
-document.getElementById(pages[current]).classList.add("active");
+/* PAGE CONTROL */
+let index=1;
+function next(){
+ index++;
+ show("p"+index);
+ typeText(texts[index-1],"t"+index);
 }
+function proposal(){show("proposal")}
+
+function show(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
 }
 
-/* No Button Runs Away */
-let noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("mouseover", function(){
-noBtn.style.position="absolute";
-noBtn.style.top=Math.random()*80+"%";
-noBtn.style.left=Math.random()*80+"%";
+/* TYPEWRITER */
+function typeText(text,el){
+ let i=0, speed=25;
+ const box=document.getElementById(el);
+ box.innerHTML="";
+ function type(){
+   if(i<text.length){
+      box.innerHTML+=text.charAt(i);
+      i++;
+      setTimeout(type,speed);
+   }
+ }
+ type();
+}
+
+/* RUNNING NO BUTTON */
+const no=document.getElementById("noBtn");
+document.addEventListener("mousemove",e=>{
+ if(!no || !no.offsetParent) return;
+ const rect=no.getBoundingClientRect();
+ const dist=Math.hypot(e.clientX-(rect.left+rect.width/2),e.clientY-(rect.top+rect.height/2));
+ if(dist<120){
+   no.style.left=Math.random()*(window.innerWidth-100)+"px";
+   no.style.top=Math.random()*(window.innerHeight-50)+"px";
+ }
 });
 
-/* Accept Love */
-function acceptLove(){
-nextPage();
-
-/* Celebration Burst */
-for(let i=0;i<30;i++){
-let heart = document.createElement("div");
-heart.classList.add("heart");
-heart.innerHTML="💖";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*30+20)+"px";
-document.body.appendChild(heart);
-setTimeout(()=>{heart.remove();},4000);
-}
+/* ACCEPT */
+function accept(){
+ show("end");
+ startHearts();
 }
 
-/* Continuous Floating Hearts */
-setInterval(()=>{
-let heart = document.createElement("div");
-heart.classList.add("heart");
-heart.innerHTML="💗";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*20+15)+"px";
-document.body.appendChild(heart);
-setTimeout(()=>{heart.remove();},6000);
-},600);
+/* HEARTS */
+function startHearts(){
+ setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💗";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(3+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+ },300);
+}
+
+/* TEXTS (keep same text you gave) */
+const texts=[
+`Out of 8 billion people in this world,
+somehow my heart found you.
+and since then...
+nothing ever felt the same.`,
+
+`remember your last birthday my love?
+we were trying to win over each other.
+i still have those chats,
+and a year later we kept every promise.`,
+
+`you made me feel emotions again.
+i was just existing before...
+now i live every moment because of you.`,
+
+`there is distance between us right now
+but our love is stronger than ever.
+and i know...
+we are meeting very soon.`
+];
 
 </script>
-
 </body>
 </html>
