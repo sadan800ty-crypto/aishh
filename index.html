@@ -17,6 +17,7 @@ body{
  overflow:hidden;
  color:#fff;
  text-align:center;
+ transition:1.5s;
 }
 
 /* Pages */
@@ -49,6 +50,16 @@ body{
  animation:float 4s ease-in-out infinite;
  max-width:800px;
  color:#ff2e93;
+
+ /* paper texture */
+ background:
+ linear-gradient(rgba(255,255,255,0.55),rgba(255,255,255,0.55)),
+ repeating-linear-gradient(
+  0deg,
+  #fff0f6,
+  #fff0f6 28px,
+  #ffd9ea 29px
+ );
 }
 
 @keyframes float{
@@ -79,11 +90,17 @@ button{
  cursor:pointer;
  transition:0.3s;
  position:relative;
+ animation:shy 3s infinite ease-in-out;
 }
 
 button:hover{
  transform:scale(1.1);
  background:#ff5cad;
+}
+
+@keyframes shy{
+ 0%,100%{transform:translateY(0);}
+ 50%{transform:translateY(-4px);}
 }
 
 input{
@@ -110,7 +127,7 @@ input{
  100%{transform:translateY(-10vh); opacity:0;}
 }
 
-/* Proposal Celebration */
+/* Forever */
 .foreverText{
  font-size:60px;
  color:#ff007f;
@@ -122,7 +139,6 @@ input{
  to{text-shadow:0 0 30px #ff007f;}
 }
 
-/* Hug Animation */
 .hug{
  font-size:80px;
  animation:hugmove 1s infinite alternate;
@@ -133,12 +149,39 @@ input{
  to{transform:scale(1.2);}
 }
 
-/* Counter Style */
+/* Counter */
 #timeTogether{
  font-size:22px;
  margin-top:15px;
  color:#ff007f;
  font-weight:bold;
+}
+
+/* Sparkles */
+.sparkle{
+ position:absolute;
+ font-size:14px;
+ pointer-events:none;
+ animation:sparkleFloat 5s linear forwards;
+ opacity:.8;
+}
+
+@keyframes sparkleFloat{
+ 0%{transform:translateY(0) scale(.6); opacity:0;}
+ 10%{opacity:1;}
+ 100%{transform:translateY(-120px) scale(1.2); opacity:0;}
+}
+
+/* Cursor Hearts */
+.cursorHeart{
+ position:fixed;
+ font-size:14px;
+ pointer-events:none;
+ animation:trail 1s linear forwards;
+}
+
+@keyframes trail{
+ to{transform:translateY(-25px);opacity:0;}
 }
 </style>
 </head>
@@ -147,6 +190,10 @@ input{
 
 <audio id="bgmusic" loop>
 <source src="https://files.catbox.moe/6w8n8k.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="typeSound">
+<source src="https://files.catbox.moe/8m6x6p.mp3" type="audio/mpeg">
 </audio>
 
 <!-- PASSWORD PAGE -->
@@ -247,7 +294,7 @@ input{
  </div>
 </div>
 
-<!-- FINAL LOVE PAGE -->
+<!-- FINAL PAGE -->
 <div class="page" id="finalLovePage">
  <div class="card">
   <h1>🌌 In Every Universe 🌌</h1>
@@ -289,10 +336,10 @@ function nextPage(){
  }
 }
 
-/* TYPEWRITER EFFECT */
+/* TYPEWRITER */
 function startTyping(page){
  let elements = page.querySelectorAll("h1, p");
- elements.forEach(el => {
+ elements.forEach(el=>{
    if(el.dataset.done) return;
    el.dataset.done = true;
    let text = el.innerHTML.trim();
@@ -302,6 +349,8 @@ function startTyping(page){
    function type(){
      if(i < text.length){
        el.innerHTML += text.charAt(i);
+       let s=document.getElementById("typeSound");
+       if(s){ s.currentTime=0; s.play(); }
        i++;
        setTimeout(type,speed);
      }
@@ -310,13 +359,13 @@ function startTyping(page){
  });
 }
 
-window.onload = function(){
+window.onload=function(){
  startTyping(document.getElementById("passwordPage"));
-}
+};
 
 /* TIME COUNTER */
 function updateCounter(){
- let start = new Date("2025-01-01T22:00:00"); 
+ let start = new Date("2025-01-01T22:00:00");
  let now = new Date();
  let diff = now - start;
  let days = Math.floor(diff/(1000*60*60*24));
@@ -329,38 +378,73 @@ function updateCounter(){
 }
 setInterval(updateCounter,1000);
 
-/* RUNAWAY NO BUTTON */
-let noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("mouseover", function(){
- noBtn.style.position="absolute";
- noBtn.style.top=Math.random()*80+"%";
- noBtn.style.left=Math.random()*80+"%";
-});
+/* RUNAWAY BUTTON */
+let noBtn=document.getElementById("noBtn");
+if(noBtn){
+ noBtn.addEventListener("mouseover",function(){
+  noBtn.style.position="absolute";
+  noBtn.style.top=Math.random()*80+"%";
+  noBtn.style.left=Math.random()*80+"%";
+ });
+}
 
 /* ACCEPT LOVE */
 function acceptLove(){
+ document.body.style.background="linear-gradient(135deg,#ffd6ec,#ffc1e3,#ffb3d9)";
  nextPage();
  for(let i=0;i<30;i++){
-   let heart = document.createElement("div");
+   let heart=document.createElement("div");
    heart.classList.add("heart");
    heart.innerHTML="💖";
    heart.style.left=Math.random()*100+"vw";
    heart.style.fontSize=(Math.random()*30+20)+"px";
    document.body.appendChild(heart);
-   setTimeout(()=>{heart.remove();},4000);
+   setTimeout(()=>heart.remove(),4000);
  }
 }
 
-/* CONTINUOUS FLOATING HEARTS */
+/* FLOATING HEARTS */
 setInterval(()=>{
- let heart = document.createElement("div");
+ let heart=document.createElement("div");
  heart.classList.add("heart");
  heart.innerHTML="💗";
  heart.style.left=Math.random()*100+"vw";
  heart.style.fontSize=(Math.random()*20+15)+"px";
  document.body.appendChild(heart);
- setTimeout(()=>{heart.remove();},6000);
+ setTimeout(()=>heart.remove(),6000);
 },600);
+
+/* SPARKLES */
+setInterval(()=>{
+ let s=document.createElement("div");
+ s.className="sparkle";
+ s.innerHTML=["✨","💗","🌸","🫧","💞"][Math.floor(Math.random()*5)];
+ s.style.left=Math.random()*100+"vw";
+ s.style.bottom="0px";
+ document.body.appendChild(s);
+ setTimeout(()=>s.remove(),5000);
+},900);
+
+/* CURSOR HEART TRAIL */
+document.addEventListener("mousemove",e=>{
+ let h=document.createElement("div");
+ h.className="cursorHeart";
+ h.innerHTML=["💗","💞","💕"][Math.floor(Math.random()*3)];
+ h.style.left=e.clientX+"px";
+ h.style.top=e.clientY+"px";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),1000);
+});
+
+/* DREAMY BREATHING EFFECT */
+let pink=true;
+setInterval(()=>{
+ if(current>2){
+   document.body.style.filter=pink?"brightness(.95) saturate(1.1)":"brightness(1)";
+   pink=!pink;
+ }
+},6000);
+
 </script>
 
 </body>
